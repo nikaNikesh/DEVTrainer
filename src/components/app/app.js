@@ -1,8 +1,10 @@
 import React from "react";
 
+import Header from "../header";
+
 const HelloWord = () => {
     return (
-        <h1>Hello World</h1>
+        <Header/>
     );
 }
 
