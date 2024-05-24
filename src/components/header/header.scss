@@ -1,0 +1,18 @@
+body {
+font-family: 'Ubuntu Sans Mono', 'Courier New', monospace;;
+}
+
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background-color: #461306;
+  color: #a49279;
+
+  h1{
+    font-weight: 700;
+    font-size: 36px;
+    text-transform: uppercase;
+  }
+}
