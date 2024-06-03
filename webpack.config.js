@@ -3,7 +3,7 @@ const path = require('path');
 
 module.exports = {
     mode: "development",
-    entry: './src/index.js',
+    entry: './src/index.tsx',
 
     module: {
         rules: [
@@ -21,12 +21,27 @@ module.exports = {
                 test: /\.scss$/,
                 use: ['style-loader', 'css-loader', 'sass-loader']
             },
+
+            {
+                test: /\.(ts|tsx)?$/,
+                use: 'ts-loader',
+                exclude: /node_modules/
+            }
         ]
+    },
+
+    devServer: {
+        historyApiFallback: true
+    },
+
+    resolve: {
+        extensions: ['.tsx', '.ts', '.js'],
     },
 
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        publicPath: '/'
 
     },
 

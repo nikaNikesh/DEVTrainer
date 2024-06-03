@@ -1,7 +1,7 @@
-import React from "react";
+import React, {ReactElement} from "react";
 import './header.scss';
 
-const Header = () => {
+const Header = (): ReactElement => {
     return (
         <header>
             <h1>this is a header</h1>
