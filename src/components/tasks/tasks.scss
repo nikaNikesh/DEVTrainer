@@ -3,4 +3,27 @@
   background-color: aqua;
 
   grid-area: 2/2/3/3;
+
+  .tasks-section {
+    display: flex;
+    justify-content: center;
+
+    background-color: coral;
+
+    .tasks-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: darkseagreen;
+
+      .task-article {
+        background-color: #f9f9f9;
+      }
+    }
+  }
 }
