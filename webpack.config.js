@@ -31,8 +31,18 @@ module.exports = {
     },
 
     devServer: {
-        historyApiFallback: true
-    },
+    historyApiFallback: true,
+    /*proxy: [
+      {
+        context: ['/api'],
+        target: 'http://192.168.3.13:8084',
+        changeOrigin: true,
+        secure: false,
+        timeout: 60000,
+        logLevel: 'debug'  // Добавление логирования
+      }
+    ]*/
+  },
 
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
