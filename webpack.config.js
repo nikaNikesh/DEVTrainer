@@ -16,11 +16,27 @@ module.exports = {
                     }
                 ]
             },
-
+            {
+                test: /\.module\.scss$/,
+                use: [
+                    'style-loader',
+                    {
+                        loader: 'css-modules-typescript-loader',
+                    },
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: true,
+                        },
+                    },
+                    'sass-loader',
+                ],
+            },
             {
                 test: /\.scss$/,
                 use: ['style-loader', 'css-loader', 'sass-loader']
             },
+
 
             {
                 test: /\.(ts|tsx)?$/,
@@ -31,18 +47,18 @@ module.exports = {
     },
 
     devServer: {
-    historyApiFallback: true,
-    /*proxy: [
-      {
-        context: ['/api'],
-        target: 'http://192.168.3.13:8084',
-        changeOrigin: true,
-        secure: false,
-        timeout: 60000,
-        logLevel: 'debug'  // Добавление логирования
-      }
-    ]*/
-  },
+        historyApiFallback: true,
+        /*proxy: [
+          {
+            context: ['/api'],
+            target: 'http://192.168.3.13:8084',
+            changeOrigin: true,
+            secure: false,
+            timeout: 60000,
+            logLevel: 'debug'  // Добавление логирования
+          }
+        ]*/
+    },
 
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],

@@ -5,10 +5,10 @@ import Header from "../header";
 import Navigation from "../navigation";
 import Home from "../home";
 import Tasks from "../tasks";
-import getTasks from "../../service/service";
 import "./app.scss";
+
 const App = (): ReactElement => {
-    getTasks(0);
+
     return (
         <BrowserRouter>
             <div className="app">
