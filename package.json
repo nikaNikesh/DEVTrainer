@@ -11,7 +11,10 @@
   "author": "Veronika",
   "license": "ISC",
   "dependencies": {
+    "@types/axios": "^0.14.0",
     "axios": "^1.7.2",
+    "list": "^2.0.19",
+    "npm": "^10.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.1"

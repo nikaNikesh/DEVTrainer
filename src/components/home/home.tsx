@@ -1,9 +1,10 @@
 import React, {ReactElement} from "react";
-import './home.scss';
+import "./home.scss";
+
 
 const Home = (): ReactElement => {
     return (
-        <main className="main-content">
+        <main className="home-main-content">
         <section className={"hero"}>
             <h2>this is the home page</h2>
         </section>
