@@ -18,7 +18,6 @@ let getTasks = async <T>(url: string, param: number): Promise<T> => {
                 }
             }
         );
-        console.log("1");
         return response.data;
 
     } catch (error) {

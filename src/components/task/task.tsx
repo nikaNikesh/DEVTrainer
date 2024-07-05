@@ -1,4 +1,4 @@
-import React, {ReactElement, useState, useEffect} from "react";
+import React, {ReactElement, useState, useEffect, useRef} from "react";
 import getTasks from "../../service/service";
 import './task.scss';
 
@@ -28,10 +28,8 @@ const Task = (): ReactElement => {
         totalPage: 0
     });
 
-    const [isDisabled, setIsDisabled] = useState<isDisabled>({
-        isDisabledNext: false,
-        isDisabledPrevious: false
-    });
+    const [difficultyFilter, setDifficultyFilter] = useState('');
+
     useEffect(() => {
 
         getTasks<TaskState>('http://192.168.3.13:8084/api/v1/tasks', state.currentPage)
@@ -47,31 +45,48 @@ const Task = (): ReactElement => {
             })
 
 
-
-    }, [state.currentPage]);
+    }, [state.currentPage, difficultyFilter]);
 
     let serialNumber: number = 1;
 
     const displayNextPage = () => {
-            setState((state: TaskState) => {
-                return {
-                    ...state,
-                    currentPage: state.currentPage + 1,
-                };
-            });
+        setState((state: TaskState) => {
+            return {
+                ...state,
+                currentPage: state.currentPage + 1,
+            };
+        });
     }
 
 
     const displayPreviousPage = () => {
-            setState((state: TaskState) => {
-                return {
-                    ...state,
-                    currentPage: state.currentPage - 1,
-                };
-            });
+        setState((state: TaskState) => {
+            return {
+                ...state,
+                currentPage: state.currentPage - 1,
+            };
+        });
     }
+
+    const onChangeDifficulty = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setDifficultyFilter(event.target.value);
+    }
+
+    const selectedSelect = useRef(null);
+    console.log(selectedSelect.current);
+
+
     return (
         <div>
+            <div className="filter-container">
+            <label>difficulty</label>
+                <select ref={selectedSelect} value={difficultyFilter} onChange={onChangeDifficulty}>
+                    <option value="">all</option>
+                    <option value="easy">easy</option>
+                    <option value="medium">medium</option>
+                    <option value="hard">hard</option>
+                </select>
+            </div>
             <table className="tasks-table">
                 <caption>
                     <h2>Tasks</h2>
