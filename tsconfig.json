@@ -116,7 +116,7 @@
   },
   "include": [
   "src/**/*",
-    "./global.d.ts"
+    "css-modules.d.ts", "declaration.d.ts"
   ],
   "exclude": [
     "node_modules",
