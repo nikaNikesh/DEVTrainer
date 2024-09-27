@@ -1,0 +1,14 @@
+
+.app {
+  display: grid;
+
+  grid-template-columns: 15vw 85vw;
+  grid-template-rows: 100px 1fr min-content;
+  min-height: 100vh;
+}
+
+@media (max-width: 767px) {
+  .app {
+    grid-template-columns: 100vw;
+  }
+}

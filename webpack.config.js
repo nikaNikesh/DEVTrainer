@@ -1,5 +1,6 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
 module.exports = {
     mode: "development",
@@ -11,41 +12,34 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: [
-                    {
-                        loader: 'babel-loader'
-                    }
-                ]
-            },
-            {
-                test: /\.module\.scss$/,
-                use: [
-                    'style-loader',
-                    {
-                        loader: 'css-modules-typescript-loader',
-                    },
-                    {
-                        loader: 'css-loader',
-                        options: {
-                            modules: true,
-                        },
-                    },
-                    'sass-loader',
-                ],
+                use: 'babel-loader',
             },
             {
                 test: /\.scss$/,
-                use: ['style-loader', 'css-loader', 'sass-loader']
+                use: [
+                    'style-loader',   // Используем 'style-loader' для разработки
+                    {
+                        loader: 'css-loader',
+                        options: {
+                            modules: {
+                                auto: (resourcePath) => resourcePath.endsWith('.module.scss'),
+                                localIdentName: '[name]__[local]__[hash:base64:5]',
+                            },
+                            importLoaders: 1,
+                        },
+                    },
+                    'sass-loader',    // Компилирует Sass в CSS
+                ],
+                include: path.resolve(__dirname, 'src'),
             },
-
-
             {
-                test: /\.(ts|tsx)?$/,
+                test: /\.(ts|tsx)$/,
                 use: 'ts-loader',
-                exclude: /node_modules/
-            }
-        ]
+                exclude: /node_modules/,
+            },
+        ],
     },
+
 
     devServer: {
         historyApiFallback: true,
@@ -62,7 +56,7 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['.tsx', '.ts', '.js'],
+        extensions: ['.tsx', '.ts', '.js', '.jsx', '.scss'],
     },
 
     output: {
@@ -74,7 +68,11 @@ module.exports = {
 
     plugins: [
         new HtmlWebpackPlugin({
-            template: './public/index.html'
-        })
-    ]
+            template: './public/index.html',
+        }),
+        new MiniCssExtractPlugin({
+            filename: '[name].css',
+            chunkFilename: '[id].css',
+        }),
+    ],
 }

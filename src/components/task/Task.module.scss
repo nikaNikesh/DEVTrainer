@@ -1,7 +1,33 @@
 $border-bold: 2px solid #222222;
 
-.tasks-table {
-  width: 100%;
+.filterContainer {
+  margin-bottom: 20px;
+  top: 0;
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333;
+  }
+  select {
+
+    padding: 8px 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    &:focus {
+      outline: none;
+      border-color: #007bff;
+    }
+  }
+}
+
+
+.tasksTable {
+
   border-collapse: collapse;
   table-layout: auto;
   margin: 20px 0;
@@ -25,19 +51,19 @@ $border-bold: 2px solid #222222;
   }
 
   th:nth-child(1), td:nth-child(1) {
-    width: 4%;
+
   }
 
   th:nth-child(2), td:nth-child(2) {
-    width: 79%;
+
   }
 
   th:nth-child(3), td:nth-child(3) {
-    width: 9%;
+
   }
 
   th:nth-child(4), td:nth-child(4) {
-    width: 8%;
+
   }
   tbody tr {
     border-bottom: 1px solid #222222;;

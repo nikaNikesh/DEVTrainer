@@ -5,19 +5,21 @@ import Header from "../header";
 import Navigation from "../navigation";
 import Home from "../home";
 import Tasks from "../tasks";
-import "./app.scss";
+import styles from "./App.module.scss";
+import Footer from "../footer";
 
 const App = (): ReactElement => {
 
     return (
         <BrowserRouter>
-            <div className="app">
+            <div className={styles.app}>
                 <Header/>
                 <Navigation/>
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="tasks" element={<Tasks/>}/>
                 </Routes>
+                <Footer/>
             </div>
         </BrowserRouter>
     );
