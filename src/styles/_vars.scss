@@ -1,0 +1,16 @@
+:root {
+	// base
+	--font-family: 'Ubuntu Sans Mono', 'Courier New', monospace;
+	--content-width: 1230px;
+	--container-offset: 15px;
+	--container-width: calc(var(--content-width) + (var(--container-offset) * 2));
+
+	// colors
+	--color-white: #fff;
+	--color-black: #000;
+	--color-burgundy: #531c05;
+	--color-green: #052e1f;
+	--color-dark: #141414;
+	--color-light-dark: #1f1f1f;
+	--color-beige: #786f47;
+}

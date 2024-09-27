@@ -1,7 +1,8 @@
 import React, {StrictMode} from "react";
 import ReactDOM from 'react-dom/client';
 import App from './components/app'
-import "./index.scss"; 
+import "./index.scss";
+import "./styles/main.scss";
 
 const root: ReactDOM.Root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 

@@ -13,3 +13,9 @@ header {
     text-transform: uppercase;
   }
 }
+
+@media (max-width: 767px) {
+  .header {
+    grid-area: 1/1/2/2;;
+  }
+}

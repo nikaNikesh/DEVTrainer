@@ -1,17 +1,17 @@
 import React, {ReactElement} from "react";
 import {Link} from "react-router-dom";
 
-import './navigation.scss';
+import styles from './Navigation.module.scss';
 
 const Navigation = (): ReactElement => {
     return (
-        <div className="sidebar-nav-container">
-            <nav className="main-nav">
-                <ul className="site-nav">
-                    <li className="site-nav-item">
+        <div className={styles.sidebarNavContainer}>
+            <nav className={styles.nav}>
+                <ul className={styles.siteNavList}>
+                    <li className={styles.siteNavItem}>
                         <Link to={"/"}>Home</Link>
                     </li>
-                    <li className="site-nav-item">
+                    <li className={styles.siteNavItem}>
                         <Link to={"tasks/"}>Tasks</Link>
                     </li>
                 </ul>
