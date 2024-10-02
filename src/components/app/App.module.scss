@@ -5,10 +5,8 @@
   grid-template-columns: 15vw 85vw;
   grid-template-rows: 100px 1fr min-content;
   min-height: 100vh;
-}
 
-@media (max-width: 767px) {
-  .app {
+  @media (max-width: 767px) {
     grid-template-columns: 100vw;
   }
 }
