@@ -1,11 +1,28 @@
-import React, { ReactElement } from 'react';
+import React, { ReactElement, useId } from 'react';
 import styles from './TasksFilter.module.scss';
 
-const TasksFilter = (): ReactElement => {
+interface TasksFilterProps {
+   onSelectDifficulty: (newDifficulty: string) => void,
+   difficultyFilter: string
+}
+
+const TasksFilter = ({onSelectDifficulty,difficultyFilter}: TasksFilterProps): ReactElement => {
+    const difficultySelectId = useId();
+    const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        const newValue: string = event.target.value;
+        onSelectDifficulty(newValue);
+    }
+
   return (
-    <footer className={styles.footer}>
-      <span>this is a footer</span>
-    </footer>
+    <div className={styles.filterContainer}>
+            <label htmlFor={difficultySelectId}>difficulty</label>
+                <select value={difficultyFilter} id={difficultySelectId} onChange={handleChange}>
+                    <option value="">all</option>
+                    <option value="easy">easy</option>
+                    <option value="medium">medium</option>
+                    <option value="hard">hard</option>
+                </select>
+    </div>
   );
 }
 
