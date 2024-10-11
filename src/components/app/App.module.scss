@@ -1,6 +1,7 @@
 
 .app {
   display: grid;
+  background-color: var(--color-dark);
 
   grid-template-columns: 15vw 85vw;
   grid-template-rows: 100px 1fr min-content;

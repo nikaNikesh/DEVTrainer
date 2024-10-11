@@ -2,8 +2,7 @@ header {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #461306;
-  color: #a49279;
+  background-color: var(--color-burgundy);
 
   grid-area: 1/1/2/3;
 

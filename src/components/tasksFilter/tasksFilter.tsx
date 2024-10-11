@@ -15,12 +15,12 @@ const TasksFilter = ({onSelectDifficulty,difficultyFilter}: TasksFilterProps): R
 
   return (
     <div className={styles.filterContainer}>
-            <label htmlFor={difficultySelectId}>difficulty</label>
-                <select value={difficultyFilter} id={difficultySelectId} onChange={handleChange}>
-                    <option value="">all</option>
-                    <option value="easy">easy</option>
-                    <option value="medium">medium</option>
-                    <option value="hard">hard</option>
+            <label htmlFor={difficultySelectId} className={styles.label}>difficulty</label>
+                <select value={difficultyFilter} id={difficultySelectId} onChange={handleChange} className={styles.select}>
+                    <option value="" className={styles.option}>all</option>
+                    <option value="easy" className={styles.option}>easy</option>
+                    <option value="medium" className={styles.option}>medium</option>
+                    <option value="hard" className={styles.option}>hard</option>
                 </select>
     </div>
   );
