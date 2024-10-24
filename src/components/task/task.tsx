@@ -1,6 +1,8 @@
-import React, {ReactElement, useState, useEffect, useRef} from "react";
+import React, {ReactElement, useState, useEffect} from "react";
 import getTasks from "../../service/service";
+import TasksFilter from "../tasksFilter";
 import styles from './Task.module.scss';
+import CustomTasksFilter from "../customTasksFilter";
 
 
 interface Task {
@@ -28,11 +30,11 @@ const Task = (): ReactElement => {
         totalPage: 0
     });
 
-    const [difficultyFilter, setDifficultyFilter] = useState('');
+    const [difficultyFilter, setDifficultyFilter] = useState<string>('difficulty');
 
     useEffect(() => {
 
-        getTasks<TaskState>('http://localhost:8084/api/v1/tasks', state.currentPage)
+        getTasks<TaskState>('http://localhost:8084/api/v1/tasks', state.currentPage, difficultyFilter)
             .then((data) => {
                 setState((state: TaskState) => {
                     return {
@@ -41,7 +43,6 @@ const Task = (): ReactElement => {
                         dataTask: data.dataTask
                     };
                 });
-                const tasksPerPage = state.dataTask.length;
             })
 
 
@@ -68,21 +69,20 @@ const Task = (): ReactElement => {
         });
     }
 
-    const onChangeDifficulty = (event: React.ChangeEvent<HTMLSelectElement>) => {
-        setDifficultyFilter(event.target.value);
+    const onSelectDifficulty = (newDifficulty: string) => {
+        setDifficultyFilter(newDifficulty);
     }
 
     return (
         <div>
-            <div className={styles.filterContainer}>
-            <label>difficulty</label>
-                <select value={difficultyFilter} onChange={onChangeDifficulty}>
-                    <option value="">all</option>
-                    <option value="easy">easy</option>
-                    <option value="medium">medium</option>
-                    <option value="hard">hard</option>
-                </select>
-            </div>
+            {/*<TasksFilter
+                onSelectDifficulty={onSelectDifficulty}
+                difficultyFilter={difficultyFilter}
+            />*/}
+            <CustomTasksFilter
+                onSelectDifficulty={onSelectDifficulty}
+                difficultyFilter={difficultyFilter}
+            />
             <table className={styles.tasksTable}>
                 <caption>
                     <h2>Tasks</h2>
