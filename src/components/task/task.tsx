@@ -2,6 +2,7 @@ import React, {ReactElement, useState, useEffect} from "react";
 import getTasks from "../../service/service";
 import TasksFilter from "../tasksFilter";
 import styles from './Task.module.scss';
+import CustomTasksFilter from "../customTasksFilter";
 
 
 interface Task {
@@ -29,7 +30,7 @@ const Task = (): ReactElement => {
         totalPage: 0
     });
 
-    const [difficultyFilter, setDifficultyFilter] = useState<string>('');
+    const [difficultyFilter, setDifficultyFilter] = useState<string>('difficulty');
 
     useEffect(() => {
 
@@ -74,7 +75,11 @@ const Task = (): ReactElement => {
 
     return (
         <div>
-            <TasksFilter
+            {/*<TasksFilter
+                onSelectDifficulty={onSelectDifficulty}
+                difficultyFilter={difficultyFilter}
+            />*/}
+            <CustomTasksFilter
                 onSelectDifficulty={onSelectDifficulty}
                 difficultyFilter={difficultyFilter}
             />
