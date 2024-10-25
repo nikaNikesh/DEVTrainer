@@ -4,7 +4,7 @@ import styles from './Header.module.scss';
 const Header = (): ReactElement => {
   return (
     <header className={styles.header}>
-      <h1>this is a header</h1>
+      <h1 className={styles.h1}>this is a header</h1>
     </header>
   );
 }

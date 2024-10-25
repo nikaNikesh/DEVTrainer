@@ -10,11 +10,16 @@ header {
     font-weight: bold;
     font-size: 2rem;
     text-transform: uppercase;
+    transition: opacity 0.2s ease-in;
   }
 }
 
 @media (max-width: 767px) {
   .header {
-    grid-area: 1/1/2/2;;
+    grid-area: 1/1/2/2;
+
+    .h1 {
+      opacity: 0;
+    }
   }
 }
