@@ -1,43 +1,47 @@
 html {
-	height: 100vh;
-	font-family: var(--font-family);
+  height: 100vh;
+  font-family: var(--font-family);
 }
 
 *,
 *::before,
 *::after {
-	padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
 body {
-	height: 100vh;
-	font-size: 16px;
-	color: var(--color-beige);
+  min-width: 360px;
+  height: 100vh;
+  font-size: 16px;
+  color: var(--color-beige);
 }
 
 img {
-	max-width: 100em;
-	object-fit: cover;
+  max-width: 100em;
+  object-fit: cover;
 }
 
 a {
-	text-decoration: none;
-	color: var(--color-beige);
+  text-decoration: none;
+  color: var(--color-beige);
 }
 
 ul {
   list-style: none;
 }
+
 #root {
 
 
 }
-.container {
-	margin: 0 auto;
-	padding-left: var(--container-offset);
-	padding-right: var(--container-offset);
-	//max-width: var(--container-width);
+
+main {
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: 0 20px;
+  border: 0;
+  background-color: var(--color-light-dark);
 }
 

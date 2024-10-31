@@ -1,9 +1,9 @@
 :root {
 	// base
 	--font-family: 'Ubuntu Sans Mono', 'Courier New', monospace;
-	--content-width: 1230px;
-	--container-offset: 15px;
-	--container-width: calc(var(--content-width) + (var(--container-offset) * 2));
+	--content-width: 1280px;
+	--sidebar-width: 200px;
+	--header-height: 100px;
 
 	// colors
 	--color-white: #fff;
