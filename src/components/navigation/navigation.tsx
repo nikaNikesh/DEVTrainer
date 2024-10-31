@@ -1,9 +1,19 @@
-import React, {ReactElement} from "react";
+import React, {ReactElement, useState} from "react";
 import {Link} from "react-router-dom";
 
 import styles from './Navigation.module.scss';
 
+interface ActiveMenu {
+    hidden: true;
+}
+
 const Navigation = (): ReactElement => {
+
+const [hiddenMenu, setActiveMenu] = useState<boolean>(true);
+
+const toggleActiveMenu = (hiddenMenu: boolean) => {
+    setActiveMenu(!hiddenMenu);
+}
     return (
         <div className={styles.sidebarNavContainer}>
             <nav className={styles.nav}>
@@ -16,8 +26,6 @@ const Navigation = (): ReactElement => {
                     </li>
                 </ul>
             </nav>
-
-
         </div>
 
     );
