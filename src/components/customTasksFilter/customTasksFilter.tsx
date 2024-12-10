@@ -1,15 +1,17 @@
 import React, {ReactElement, useEffect, useRef, useState} from "react";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {useAppSelector} from "../../hooks/useAppSelector";
+import {setDifficulty} from "../../store/slices/tasksDataSlice";
+
 import styles from './CustomTasksFilter.module.scss';
 
-interface CustomTasksFilterProps {
-   onSelectDifficulty: (newDifficulty: string) => void,
-   difficultyFilter: string
-}
-
-const CustomTasksFilter = ({onSelectDifficulty, difficultyFilter}: CustomTasksFilterProps): ReactElement => {
+const CustomTasksFilter = (): ReactElement => {
     const dataOptions: string[] = ['all', 'easy', 'medium', 'hard'];
     const [isOpenOptions, setOpenOptions] = useState<boolean>(false);
     const selectContainerRef = useRef<HTMLDivElement | null>(null);
+    const dispatch = useAppDispatch();
+    const difficultyFilter = useAppSelector((state) => state.tasksData.difficulty);
+
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -35,7 +37,7 @@ const CustomTasksFilter = ({onSelectDifficulty, difficultyFilter}: CustomTasksFi
                 {dataOptions.map((nameOption) => (
                     <li className={styles.option} key={nameOption}
                         onClick={() => {
-                            onSelectDifficulty(nameOption);
+                            dispatch(setDifficulty(nameOption));
                             setOpenOptions(!isOpenOptions);
                         }}
                     >
