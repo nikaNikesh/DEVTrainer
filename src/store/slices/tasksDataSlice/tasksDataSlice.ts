@@ -7,6 +7,7 @@ interface Task {
     taskDifficultyLevel: string,
     numberOfSolutions: number
 }
+
 interface TaskState {
     dataTask: Task[],
     currentPage: number,
@@ -29,14 +30,15 @@ const tasksDataSlice = createSlice({
     name: 'tasksData',
     initialState,
     reducers: {
-        nextPage(state) {
+        nextPage: (state) => {
             state.currentPage += 1;
         },
-         prevPage(state) {
+        prevPage: (state) => {
             state.currentPage -= 1;
         },
-        setDifficulty(state, action: PayloadAction<string>) {
+        setDifficulty: (state, action: PayloadAction<string>) => {
             state.difficulty = action.payload;
+            state.currentPage = initialState.currentPage;
         }
     },
     extraReducers: (builder) => {
@@ -60,5 +62,9 @@ const tasksDataSlice = createSlice({
     }
 });
 
-export const { nextPage, prevPage, setDifficulty } = tasksDataSlice.actions;
+export const {
+    nextPage,
+    prevPage,
+    setDifficulty
+} = tasksDataSlice.actions;
 export default tasksDataSlice.reducer;

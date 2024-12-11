@@ -6,10 +6,6 @@ import {closeBurgerMenu} from "../../store/slices/burgerMenuSlice";
 
 import styles from './Navigation.module.scss';
 
-interface ActiveMenu {
-    hidden: true;
-}
-
 const Navigation = (): ReactElement => {
 
     const isVisible = useAppSelector((state) => state.burgerMenu.isVisible);
