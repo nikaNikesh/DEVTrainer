@@ -2,6 +2,7 @@ import React, {ReactElement, useState} from "react";
 import {Link} from "react-router-dom";
 
 import styles from './Navigation.module.scss';
+import {useAppSelector} from "../../hooks/useAppSelector";
 
 interface ActiveMenu {
     hidden: true;
@@ -9,13 +10,10 @@ interface ActiveMenu {
 
 const Navigation = (): ReactElement => {
 
-const [hiddenMenu, setActiveMenu] = useState<boolean>(true);
+const isVisible = useAppSelector((state) => state.burgerMenu.isVisible);
 
-const toggleActiveMenu = (hiddenMenu: boolean) => {
-    setActiveMenu(!hiddenMenu);
-}
     return (
-        <div className={styles.sidebarNavContainer}>
+        <div className={isVisible? styles.sidebarNavContainer : styles.hidden}>
             <nav className={styles.nav}>
                 <ul className={styles.siteNavList}>
                     <li className={styles.siteNavItem}>

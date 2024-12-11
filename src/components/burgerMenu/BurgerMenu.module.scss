@@ -1,6 +1,7 @@
 .burgerButton {
   display: none;
 }
+
 @media (max-width: 767px) {
   .burgerButton {
     all: unset;
@@ -23,32 +24,42 @@
       background-color: var(--color-beige);
       transform: scale(1);
       z-index: 70;
-    }
 
-    span::after {
-      content: "";
-      display: block;
-      position: absolute;
-      left: 0;
-      top: 12px;
-      height: 2px;
-      width: 100%;
-      background-color: var(--color-beige);
-      transform: scale(1);
-      z-index: 70;
-    }
+      &.active {
+        background-color: transparent;
+      }
 
-    span::before {
-      content: "";
-      display: block;
-      position: absolute;
-      left: 0;
-      top: -12px;
-      height: 2px;
-      width: 100%;
-      background-color: var(--color-beige);
-      transform: scale(1);
-      z-index: 70;
+      &::after, &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 0;
+        height: 2px;
+        width: 100%;
+        background-color: var(--color-beige);
+        z-index: 70;
+      }
+
+      &::after {
+        top: 12px;
+        transform: scale(1);
+      }
+
+      &::before {
+        top: -12px;
+        transform: scale(1);
+      }
+
+      // Вращение при активном состоянии
+      &.active::after {
+        transform: rotate(-45deg) translateY(0);
+        top: 0;
+      }
+
+      &.active::before {
+        transform: rotate(45deg) translateY(0);
+        top: 0;
+      }
     }
   }
 }
