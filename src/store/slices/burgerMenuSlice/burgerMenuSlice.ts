@@ -13,9 +13,12 @@ const burgerMenuSlice = createSlice({
     reducers: {
         toggleBurgerMenu: (state) => {
             state.isVisible = !state.isVisible;
+        },
+        closeBurgerMenu: (state) => {
+            state.isVisible = false;
         }
     }
 });
 
 export default burgerMenuSlice.reducer;
-export const {toggleBurgerMenu} = burgerMenuSlice.actions;
+export const {toggleBurgerMenu, closeBurgerMenu} = burgerMenuSlice.actions;
