@@ -1,5 +1,7 @@
 import React, {ReactElement} from "react";
 import {BrowserRouter, Route, Routes} from 'react-router-dom';
+import {Provider} from 'react-redux';
+import store from "../../store";
 
 import Header from "../header";
 import Navigation from "../navigation";
@@ -11,17 +13,19 @@ import Footer from "../footer";
 const App = (): ReactElement => {
 
     return (
-        <BrowserRouter>
-            <div className={styles.app}>
-                <Header/>
-                <Navigation/>
-                <Routes>
-                    <Route path="/" element={<Home/>}/>
-                    <Route path="tasks" element={<Tasks/>}/>
-                </Routes>
-                <Footer/>
-            </div>
-        </BrowserRouter>
+        <Provider store={store}>
+            <BrowserRouter>
+                <div className={styles.app}>
+                    <Header/>
+                    <Navigation/>
+                    <Routes>
+                        <Route path="/" element={<Home/>}/>
+                        <Route path="tasks" element={<Tasks/>}/>
+                    </Routes>
+                    <Footer/>
+                </div>
+            </BrowserRouter>
+        </Provider>
     );
 }
 
