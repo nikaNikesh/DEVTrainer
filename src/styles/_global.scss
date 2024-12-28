@@ -1,6 +1,7 @@
 html {
   height: 100vh;
   font-family: var(--font-family);
+  scroll-behavior: smooth;
 }
 
 *,
@@ -15,10 +16,12 @@ body {
   min-width: 360px;
   height: 100vh;
   font-size: 16px;
+  line-height: 1.5;
   color: var(--color-beige);
 }
 
 img {
+  display: block;
   max-width: 100em;
   object-fit: cover;
 }
@@ -30,6 +33,13 @@ a {
 
 ul {
   list-style: none;
+}
+
+input,
+textarea,
+select,
+button {
+  font: inherit;
 }
 
 #root {

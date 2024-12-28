@@ -19,6 +19,7 @@ interface TaskState {
 
 export interface TasksData {
     dataTask: {
+            id: string,
             tittle: string,
             taskDifficultyLevel: string,
             numberOfSolutions: number

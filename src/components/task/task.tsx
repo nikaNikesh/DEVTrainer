@@ -7,6 +7,7 @@ import styles from './Task.module.scss';
 
 import getTasks from "../../service";
 import CustomTasksFilter from "../customTasksFilter";
+import {Link} from "react-router-dom";
 
 
 interface Task {
@@ -37,6 +38,7 @@ const Task = (): ReactElement => {
     const dataTasks = useAppSelector((state) => state.tasksData.dataTask);
 
 
+
     useEffect(() => {
         dispatch(getTasks({url: url, page: currentPage, difficulty: difficulty}));
     }, [currentPage, difficulty]);
@@ -62,7 +64,9 @@ const Task = (): ReactElement => {
                         <tr key={index}>
                             <td>{currentPage * pageSize + index + 1}</td>
                             <td>
-                                <h3>{task.tittle}</h3>
+                                <h3>
+                                    <Link to={`/tasks/${task.id}`}>{task.tittle}</Link>
+                                </h3>
                             </td>
                             <td>{task.taskDifficultyLevel}</td>
                             <td>{task.numberOfSolutions}</td>
