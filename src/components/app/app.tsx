@@ -9,6 +9,7 @@ import Home from "../home";
 import Tasks from "../tasks";
 import styles from "./App.module.scss";
 import Footer from "../footer";
+import TaskDetails from "../taskDetails";
 
 const App = (): ReactElement => {
 
@@ -21,6 +22,7 @@ const App = (): ReactElement => {
                     <Routes>
                         <Route path="/" element={<Home/>}/>
                         <Route path="tasks" element={<Tasks/>}/>
+                        <Route path="tasks/:taskId" element={<TaskDetails/>}/>
                     </Routes>
                     <Footer/>
                 </div>

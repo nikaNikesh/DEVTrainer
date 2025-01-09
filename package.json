@@ -13,8 +13,10 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.3.0",
     "@types/axios": "^0.14.0",
+    "@types/codemirror": "^5.60.15",
     "autoprefixer": "^10.4.19",
     "axios": "^1.7.2",
+    "codemirror": "^6.0.1",
     "list": "^2.0.19",
     "mini-css-extract-plugin": "^2.9.0",
     "npm": "^10.8.1",
