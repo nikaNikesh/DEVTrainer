@@ -1,54 +1,55 @@
 import axios, {AxiosResponse} from "axios";
 import {createAsyncThunk} from "@reduxjs/toolkit";
 
-/*
-interface Task {
-    tittle: string,
-    taskDifficultyLevel: string,
-    numberOfSolutions: number
-}
-
-interface TaskState {
-    dataTask: Task[],
-    currentPage: number,
-    totalPage: number,
-    status: string,
-    error: null
-}
-*/
-
 export interface TasksData {
-    dataTask: {
-            id: string,
-            tittle: string,
-            taskDifficultyLevel: string,
-            numberOfSolutions: number
+    content: {
+        id: string,
+        title: string,
+        difficulty: string,
+        numberOfSolutions: number
     }[],
-    currentPage: number,
-    totalPage: number
+    totalPages: number,
+    totalElements: number,
+    size: number,
+    number: number
 }
 
-
-interface GetParams {
+interface TasksRequestBody {
     page: number,
-    difficultly?: string
+    size: number,
+    difficulty?: string,
+    title?: string,
+    numberOfSolutions?: number
 }
 
-const getTasks = createAsyncThunk<TasksData, { url: string, page: number, difficulty: string }, { rejectValue: string }>(
+const getTasks = createAsyncThunk<
+    TasksData,
+    TasksRequestBody & { url: string },
+    { rejectValue: string }
+>(
     'tasks/fetchTasks',
-    async ({url, page, difficulty}, {rejectWithValue}) => {
+    async ({url, page, size, difficulty, title, numberOfSolutions}, {rejectWithValue}) => {
         try {
-            let getParams: GetParams = { page: page };
+            let tasksRequestBody: TasksRequestBody = {
+                page: page,
+                size: size
+            };
 
             if (difficulty && difficulty !== 'all') {
-                getParams.difficultly = difficulty;
+                tasksRequestBody.difficulty = difficulty.toUpperCase();
             }
 
-            const response: AxiosResponse<TasksData> = await axios.get<TasksData>(
+            if (title) {
+                tasksRequestBody.title = title;
+            }
+
+            if (numberOfSolutions) {
+                tasksRequestBody.numberOfSolutions = numberOfSolutions;
+            }
+
+            const response: AxiosResponse<TasksData> = await axios.post<TasksData>(
                 url,
-                {
-                    params: getParams
-                }
+                tasksRequestBody
             );
 
             return response.data;
@@ -57,28 +58,6 @@ const getTasks = createAsyncThunk<TasksData, { url: string, page: number, diffic
         }
     }
 );
-
-
-/*
-let getTasks = async <T>(url: string, page: number, difficulty: string): Promise<T> => {
-    try {
-        const response: AxiosResponse<T> = await axios.get<T>(
-            url,
-            {
-                params: {
-                    page: page,
-                    difficultly: difficulty
-                }
-            }
-        );
-        return response.data;
-
-    } catch (error) {
-        console.error('Error fetching data', error);
-        throw error;
-    }
-}
-*/
 
 export default getTasks;
 
