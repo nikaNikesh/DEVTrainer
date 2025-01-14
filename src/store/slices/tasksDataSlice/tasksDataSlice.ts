@@ -4,8 +4,8 @@ import getTasks, {TasksData} from "../../../service/service";
 
 interface Task {
     id: string,
-    tittle: string,
-    taskDifficultyLevel: string,
+    title: string,
+    difficulty: string,
     numberOfSolutions: number
 }
 
@@ -51,14 +51,14 @@ const tasksDataSlice = createSlice({
 
             .addCase(getTasks.fulfilled, (state, action: PayloadAction<TasksData>) => {
                 state.loading = false;
-                state.dataTask = action.payload.dataTask;
-                state.currentPage = action.payload.currentPage;
-                state.totalPage = action.payload.totalPage;
+                state.dataTask = action.payload.content;
+                state.currentPage = action.payload.number;
+                state.totalPage = action.payload.totalPages;
             })
 
             .addCase(getTasks.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload || 'Failed to load tasks';
+                state.error = action.payload ? action.payload: "Failed to load tasks";
             })
     }
 });

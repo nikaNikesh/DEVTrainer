@@ -11,20 +11,10 @@ import {Link} from "react-router-dom";
 
 
 interface Task {
-    tittle: string,
-    taskDifficultyLevel: string,
+    id: string,
+    title: string,
+    difficulty: string,
     numberOfSolutions: number
-}
-
-interface TaskState {
-    dataTask: Task[],
-    currentPage: number,
-    totalPage: number
-}
-
-interface isDisabled {
-    isDisabledNext: boolean,
-    isDisabledPrevious: boolean
 }
 
 const Task = (): ReactElement => {
@@ -40,7 +30,7 @@ const Task = (): ReactElement => {
 
 
     useEffect(() => {
-        dispatch(getTasks({url: url, page: currentPage, difficulty: difficulty}));
+                dispatch(getTasks({url: url, page: currentPage, size: pageSize, difficulty: difficulty}));
     }, [currentPage, difficulty]);
 
     return (
@@ -65,10 +55,10 @@ const Task = (): ReactElement => {
                             <td>{currentPage * pageSize + index + 1}</td>
                             <td>
                                 <h3>
-                                    <Link to={`/tasks/${task.id}`}>{task.tittle}</Link>
+                                    <Link to={`/tasks/${task.id}`}>{task.title}</Link>
                                 </h3>
                             </td>
-                            <td>{task.taskDifficultyLevel}</td>
+                            <td>{task.difficulty}</td>
                             <td>{task.numberOfSolutions}</td>
                         </tr>)
                 })}
@@ -80,7 +70,7 @@ const Task = (): ReactElement => {
                     Previous
                 </button>
                 <span>Page {currentPage + 1} of {totalPage}</span>
-                <button onClick={() => dispatch(nextPage())} disabled={currentPage === totalPage + 1}>
+                <button onClick={() => dispatch(nextPage())} disabled={currentPage === totalPage - 1}>
                     Next
                 </button>
 
