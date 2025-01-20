@@ -11,7 +11,7 @@ import {Link} from "react-router-dom";
 
 
 interface Task {
-    id: string,
+    id: number,
     title: string,
     difficulty: string,
     numberOfSolutions: number
@@ -62,6 +62,7 @@ const Task = (): ReactElement => {
                             <td>{task.numberOfSolutions}</td>
                         </tr>)
                 })}
+
                 </tbody>
             </table>
 
