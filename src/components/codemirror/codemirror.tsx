@@ -1,17 +1,19 @@
 import React, {ReactElement, useEffect, useRef} from "react";
-import {EditorState} from "@uiw/react-codemirror";
+import {EditorState, ViewUpdate} from "@uiw/react-codemirror";
 import {basicSetup} from "codemirror";
 import {EditorView} from "@codemirror/view";
+import {oneDark} from "@codemirror/theme-one-dark";
+import {autocompletion} from "@codemirror/autocomplete";
 import {javascript} from "@codemirror/lang-javascript";
 import {java} from "@codemirror/lang-java";
 import {useAppSelector} from "../../hooks/useAppSelector";
 
 interface PropsType {
-  onChange: (id: number, solution: string) => void;
-  id: number;
+    onChange: (id: number, solution: string) => void;
+    id: number;
 }
 
-const Codemirror: React.FC<PropsType> = ({ onChange, id }): ReactElement => {
+const Codemirror: React.FC<PropsType> = ({onChange, id}): ReactElement => {
     const tasksSolutionState = useAppSelector(state => state.tasksSolution[id]);
     const initialDoc: string = "Here will be the task condition with the server";
     const editorRef = useRef<HTMLDivElement>(null);
@@ -23,10 +25,14 @@ const Codemirror: React.FC<PropsType> = ({ onChange, id }): ReactElement => {
             doc: (!tasksSolutionState) ? initialDoc : tasksSolutionState,
             extensions: [
                 basicSetup,
+                oneDark,
                 javascript(),
-                java(),
-                EditorView.updateListener.of((update) => {
-                    if (update.changes) {
+                // autocompletion({
+                //     activateOnTyping: true
+                // }),
+                // java(),
+                EditorView.updateListener.of((update: ViewUpdate) => {
+                    if (update.docChanged) {
                         onChange(id, update.state.doc.toString())
                     }
                 })]
@@ -48,20 +54,40 @@ const Codemirror: React.FC<PropsType> = ({ onChange, id }): ReactElement => {
 export default Codemirror;
 
 
-/*
-import React, {ReactElement} from 'react';
-import CodeMirror from '@uiw/react-codemirror';
-import { javascript } from '@codemirror/lang-javascript';
+/*import React, {ReactElement} from 'react';
+import CodeMirror, {oneDark, ViewUpdate} from '@uiw/react-codemirror';
+import {javascript} from '@codemirror/lang-javascript';
+import {basicSetup, EditorView} from "codemirror";
+import {autocompletion} from "@codemirror/autocomplete";
+import {useAppSelector} from "../../hooks/useAppSelector";
 
-const MyCodemirror = (): ReactElement => {
-    const [{value, height}, setValue] = React.useState({value: "console.log('hello world!');", height: 100});
-    const onChange = React.useCallback((val: any, viewUpdate: any) => {
-        console.log('val:', val);
-        setValue((prevState) => ({
-            value: val,
-            height: prevState.height + 10 // Обновление высоты на основе предыдущего значения
-        }));
-    }, []);
-    return <CodeMirror value={value} height={height.toString() + "px"} theme="dark" extensions={[javascript({jsx: true})]} onChange={onChange}/>;
+interface PropsType {
+    myOnChange: (id: number, solution: string) => void;
+    id: number;
+}
+
+const MyCodemirror: React.FC<PropsType> = ({myOnChange, id}): ReactElement => {
+    const tasksSolutionState = useAppSelector(state => state.tasksSolution[id]);
+    const initialDoc: string = "Here will be the task condition with the server";
+    const defaultValue = (!tasksSolutionState) ? initialDoc : tasksSolutionState;
+
+    const [{value}, setValue] = React.useState({value: defaultValue});
+
+    return <CodeMirror value={defaultValue} height={"100px"}
+                       theme="dark"
+                       extensions={[
+                           basicSetup,
+                           oneDark,
+                           javascript(),
+                           autocompletion({
+                               activateOnTyping: true
+                           }),
+                           EditorView.updateListener.of((update: ViewUpdate) => {
+                               if (update.docChanged) {
+                                   myOnChange(id, update.state.doc.toString())
+                               }
+                           })
+                       ]}
+                        />;
 }
 export default MyCodemirror;*/

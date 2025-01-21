@@ -6,6 +6,7 @@ import {setSolution} from "../../store/slices/tasksSolutionSlice";
 
 
 import styles from "./TaskDetails.module.scss";
+import MyCodemirror from "../codemirror";
 
 
 const TaskDetails = (): ReactElement => {
@@ -25,8 +26,8 @@ const TaskDetails = (): ReactElement => {
             <section className={styles.solutionSection}>
                 <h2>Your solution</h2>
                 <div className={styles.solutionContainer}>
-                <Codemirror
-                    onChange={
+                <MyCodemirror
+                    myOnChange={
                         (id: number, solution: string) => {
                             dispatch(setSolution({key: id, value: solution}))
                         }
