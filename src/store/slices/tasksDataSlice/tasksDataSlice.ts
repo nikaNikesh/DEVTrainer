@@ -3,7 +3,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import getTasks, {TasksData} from "../../../service/service";
 
 interface Task {
-    id: string,
+    id: number,
     title: string,
     difficulty: string,
     numberOfSolutions: number

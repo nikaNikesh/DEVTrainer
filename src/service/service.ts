@@ -3,7 +3,7 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 
 export interface TasksData {
     content: {
-        id: string,
+        id: number,
         title: string,
         difficulty: string,
         numberOfSolutions: number
