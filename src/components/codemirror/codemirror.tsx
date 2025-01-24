@@ -1,12 +1,11 @@
 import React, {ReactElement, useEffect, useRef} from "react";
-import {EditorState, ViewUpdate} from "@uiw/react-codemirror";
-import {basicSetup} from "codemirror";
-import {EditorView} from "@codemirror/view";
+import {EditorState} from "@codemirror/state";
+import {EditorView, basicSetup} from "codemirror";
 import {oneDark} from "@codemirror/theme-one-dark";
-import {autocompletion} from "@codemirror/autocomplete";
 import {javascript} from "@codemirror/lang-javascript";
 import {java} from "@codemirror/lang-java";
 import {useAppSelector} from "../../hooks/useAppSelector";
+
 
 interface PropsType {
     onChange: (id: number, solution: string) => void;
@@ -27,15 +26,24 @@ const Codemirror: React.FC<PropsType> = ({onChange, id}): ReactElement => {
                 basicSetup,
                 oneDark,
                 javascript(),
-                // autocompletion({
-                //     activateOnTyping: true
-                // }),
-                // java(),
-                EditorView.updateListener.of((update: ViewUpdate) => {
+                java(),
+                EditorView.updateListener.of((update) => {
                     if (update.docChanged) {
                         onChange(id, update.state.doc.toString())
                     }
-                })]
+                }),
+                EditorView.lineWrapping,
+                EditorView.theme({
+                    '&': {
+                        backgroundColor: '#383838',
+                        height: '400px',
+                        width: '100%',
+                    },
+                    '.cm-content': {
+                        backgroundColor: '#383838',
+                    }
+                }),
+            ]
         });
 
         const view = new EditorView({
@@ -53,7 +61,7 @@ const Codemirror: React.FC<PropsType> = ({onChange, id}): ReactElement => {
 }
 export default Codemirror;
 
-
+//creating an editor via the CodeMirror component from the "@uiw/react-codemirror" library
 /*import React, {ReactElement} from 'react';
 import CodeMirror, {oneDark, ViewUpdate} from '@uiw/react-codemirror';
 import {javascript} from '@codemirror/lang-javascript';
