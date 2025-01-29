@@ -28,7 +28,16 @@ const getTasks = createAsyncThunk<
     { rejectValue: string }
 >(
     'tasks/fetchTasks',
-    async ({url, page, size, difficulty, title, numberOfSolutions}, {rejectWithValue}) => {
+    async ({
+               url,
+               page,
+               size,
+               difficulty,
+               title,
+               numberOfSolutions
+           },
+           {rejectWithValue}
+    ) => {
         try {
             let tasksRequestBody: TasksRequestBody = {
                 page: page,
