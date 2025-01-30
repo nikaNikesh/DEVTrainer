@@ -8,12 +8,12 @@ import {useAppSelector} from "../../hooks/useAppSelector";
 
 
 interface PropsType {
-    onChange: (id: number, solution: string) => void;
-    id: number;
+    onChange: (id: string, solution: string) => void;
+    id: string;
 }
 
 const Codemirror: React.FC<PropsType> = ({onChange, id}): ReactElement => {
-    const tasksSolutionState = useAppSelector(state => state.tasksSolution[id]);
+    const tasksSolutionState = localStorage.getItem(id);
     const initialDoc: string = "Here will be the task condition with the server";
     const editorRef = useRef<HTMLDivElement>(null);
 
