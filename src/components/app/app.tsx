@@ -10,6 +10,7 @@ import Tasks from "../tasks";
 import styles from "./App.module.scss";
 import Footer from "../footer";
 import TaskDetails from "../taskDetails";
+import AuthPage from "../authPage";
 
 const App = (): ReactElement => {
 
@@ -23,6 +24,7 @@ const App = (): ReactElement => {
                         <Route path="/" element={<Home/>}/>
                         <Route path="tasks" element={<Tasks/>}/>
                         <Route path="tasks/:taskId" element={<TaskDetails/>}/>
+                        <Route path="auth" element={<AuthPage/>}/>
                     </Routes>
                     <Footer/>
                 </div>
