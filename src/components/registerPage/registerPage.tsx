@@ -1,17 +1,19 @@
 import React, {ReactElement, useRef, useState} from 'react';
-import styles from './AuthPage.module.scss';
+import styles from './RegisterPage.module.scss';
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import authService from "../../service/authService";
 
-const AuthPage = (): ReactElement => {
+const RegisterPage = (): ReactElement => {
     const [login, setLogin] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [errorPassword, setErrorPassword] = useState<string>("");
     const [errorLogin, setErrorLogin] = useState<string>("");
+    const [username, setUsername] = useState<string>("");
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/; // format: username, domain name, domain zone
     const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; //min 8 characters and at least 1 letter and 1 number
 
     const passwordRef = useRef<HTMLInputElement>(null);
+    const loginRef = useRef<HTMLInputElement>(null);
     const dispatch = useAppDispatch();
     const url: string = 'http://localhost:8084/api/v1/auth/authenticate';
 
@@ -20,24 +22,30 @@ const AuthPage = (): ReactElement => {
          if (!emailPattern.test(login)) {
         setErrorLogin("Invalid email address");
         return;
-    }
-
-    if (!passwordPattern.test(password)) {
-        setErrorPassword("Password must be at least 8 characters long, including at least 1 letter and 1 number");
-        return;
-    }
-
-    dispatch(authService({
-        url: url,
-        credentials: {
-            email: login,
-            password: password
         }
-    }));
+         
+        if (!passwordPattern.test(password)) {
+            setErrorPassword("Password must be at least 8 characters long, including at least 1 letter and 1 number");
+            return;
+        }
+
+        dispatch(authService({
+            url: url,
+            credentials: {
+                email: login,
+                password: password,
+                username: username,
+                role: 'USER'
+            }
+        }));
     };
 
     const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
+    };
+
+     const handleChangeUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setUsername(e.target.value);
     };
 
     const validationPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -74,15 +82,31 @@ const AuthPage = (): ReactElement => {
             passwordRef.current?.focus();
         }
     };
+       const handleKeyDownToLogin = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            loginRef.current?.focus();
+        }
+    };
 
     return (
         <div className={styles.container}>
             <form className={styles.form}
                   onSubmit={handleSubmit}>
-                <h2 className={styles.title}>Авторизация</h2>
+                <h2 className={styles.title}>Регистрация</h2>
                 <input
                     type="text"
-                    placeholder="Логин"
+                    placeholder="Username"
+                    value={username}
+                    onChange={handleChangeUsername}
+                    onKeyDown={handleKeyDownToLogin}
+                    className={styles.input}
+
+                />
+                <input
+                    ref={loginRef}
+                    type="text"
+                    placeholder="Login"
                     value={login}
                     onFocus={clearLoginError}
                     onChange={handleChangeLogin}
@@ -95,7 +119,7 @@ const AuthPage = (): ReactElement => {
                 <input
                     ref={passwordRef}
                     type="password"
-                    placeholder="Пароль"
+                    placeholder="Password"
                     value={password}
                     onFocus={clearPasswordError}
                     onChange={handleChangePassword}
@@ -105,11 +129,11 @@ const AuthPage = (): ReactElement => {
                 {errorPassword && <span className="errorMessage">{errorPassword}</span>}
                 <button
                     type="submit" className={styles.button}>
-                    Войти
+                    Зарегистрироваться
                 </button>
             </form>
         </div>
     );
 };
 
-export default AuthPage;
+export default RegisterPage;

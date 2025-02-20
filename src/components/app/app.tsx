@@ -11,6 +11,7 @@ import styles from "./App.module.scss";
 import Footer from "../footer";
 import TaskDetails from "../taskDetails";
 import AuthPage from "../authPage";
+import RegisterPage from "../registerPage";
 
 const App = (): ReactElement => {
 
@@ -25,6 +26,7 @@ const App = (): ReactElement => {
                         <Route path="tasks" element={<Tasks/>}/>
                         <Route path="tasks/:taskId" element={<TaskDetails/>}/>
                         <Route path="auth" element={<AuthPage/>}/>
+                        <Route path="register" element={<RegisterPage/>}/>
                     </Routes>
                     <Footer/>
                 </div>

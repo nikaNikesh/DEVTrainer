@@ -1,6 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios, {AxiosResponse} from "axios";
 
+
 interface ServerResponse {
     status: string,
     message: string
@@ -20,13 +21,13 @@ const sendService = createAsyncThunk<
     async ({url, id, solution}, {rejectWithValue}) => {
 
         try {
-            const RequestBody = {
+            const requestBody = {
                 id: id,
                 solution: solution
             }
-            const response: AxiosResponse<ServerResponse> = await axios.post<ServerResponse>(url, RequestBody);
+            const response: AxiosResponse<ServerResponse> = await axios.post<ServerResponse>(url, requestBody);
             return response.data;
-        } catch (error: any) {
+        } catch (error: any ) {
             return rejectWithValue(error.message || 'Failed to send data')
         }
 

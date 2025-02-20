@@ -29,6 +29,9 @@ const Navigation = (): ReactElement => {
                     <li className={styles.siteNavItem}>
                         <Link to={"auth/"}>Log in</Link>
                     </li>
+                    <li className={styles.siteNavItem}>
+                        <Link to={"register/"}>Sign up</Link>
+                    </li>
                 </ul>
             </nav>
         </div>
