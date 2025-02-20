@@ -2,12 +2,15 @@ import {configureStore} from "@reduxjs/toolkit";
 import tasksDataReducer from "./slices/tasksDataSlice";
 import burgerMenuReducer from "./slices/burgerMenuSlice";
 import solutionReducer from "./slices/solutionResponseSlice";
+import authReducer from "./slices/authSlice";
 
 const store = configureStore({
     reducer: {
         tasksData: tasksDataReducer,
         burgerMenu: burgerMenuReducer,
-        serverResponse: solutionReducer
+        serverResponse: solutionReducer,
+        auth: authReducer
+
     },
 });
 
