@@ -2,8 +2,10 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios, {AxiosResponse, AxiosError} from "axios";
 
 interface AuthCredentials {
+    username: string;
     email: string;
     password: string;
+    role: string;
 }
 
 interface AuthPayload {
@@ -12,12 +14,12 @@ interface AuthPayload {
 }
 
 const ERROR_MESSAGES = {
-    UNAUTHORIZED: "Incorrect login or password",
+    LOGIN_CONFLICT: "This login is already registered",
     SERVER_NOT_RESPONDING: "Server not responding - check your internet connection",
     UNEXPECTED_ERROR: "Unexpected error occurred",
 };
 
-const authService = createAsyncThunk<
+const registerService = createAsyncThunk<
     void,
     AuthPayload,
     { rejectValue: string }
@@ -35,15 +37,14 @@ const authService = createAsyncThunk<
                     return rejectWithValue(ERROR_MESSAGES.SERVER_NOT_RESPONDING);
                 }
 
-                if (error.response.status === 401) {
-                    return rejectWithValue(ERROR_MESSAGES.UNAUTHORIZED);
+                if (error.response.status === 409) {
+                    return rejectWithValue(ERROR_MESSAGES.LOGIN_CONFLICT);
                 }
-
-                return rejectWithValue(ERROR_MESSAGES.UNEXPECTED_ERROR);
             }
+            return rejectWithValue(ERROR_MESSAGES.UNEXPECTED_ERROR);
         }
     }
 );
 
-export default authService;
+export default registerService;
 

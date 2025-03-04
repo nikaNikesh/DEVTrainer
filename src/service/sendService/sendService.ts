@@ -25,7 +25,11 @@ const sendService = createAsyncThunk<
                 id: id,
                 solution: solution
             }
-            const response: AxiosResponse<ServerResponse> = await axios.post<ServerResponse>(url, requestBody);
+            const response: AxiosResponse<ServerResponse> = await axios.post<ServerResponse>(
+                url,
+                requestBody,
+                { withCredentials: true }
+            );
             return response.data;
         } catch (error: any ) {
             return rejectWithValue(error.message || 'Failed to send data')

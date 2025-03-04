@@ -1,30 +1,30 @@
 import {createSlice} from "@reduxjs/toolkit";
-import authService from "../../../service/authService";
+import registerService from "../../../service/registerService";
 
 interface AuthState {
-    isAuth: boolean;
+    isRegistered: boolean;
     loading: boolean;
     error: string | null;
 }
 
 const initialState: AuthState = {
-    isAuth: false,
+    isRegistered: false,
     loading: false,
     error: null
 }
 
-const authSlice = createSlice({
+const registerSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-         clearAuthError: (state) => {
+         clearRegistrationError: (state) => {
             state.error = null;
         },
     },
     extraReducers: (builder) => {
         builder
             .addCase(
-                authService.pending,
+                registerService.pending,
                 (state) => {
 
                     state.loading = true;
@@ -32,24 +32,24 @@ const authSlice = createSlice({
             )
 
             .addCase(
-                authService.fulfilled,
+                registerService.fulfilled,
                 (state) => {
 
-                    state.isAuth = true;
+                    state.isRegistered = true;
                     state.loading = false;
                 }
             )
 
             .addCase(
-                authService.rejected,
+                registerService.rejected,
                 (state, action) => {
 
                     state.loading = false;
-                    state.error = action.payload ? action.payload : "Unknown error during authentication";
+                    state.error = action.payload ? action.payload : "Unknown error during registration";
                 }
             )
     }
 });
 
-export const { clearAuthError } = authSlice.actions;
-export default authSlice.reducer;
+export const { clearRegistrationError } = registerSlice.actions;
+export default registerSlice.reducer;
