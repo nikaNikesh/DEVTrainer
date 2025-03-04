@@ -1,7 +1,11 @@
-import React, {ReactElement, useRef, useState} from 'react';
+import React, {ReactElement, useRef, useState, useEffect, SyntheticEvent} from 'react';
+import {useNavigate} from 'react-router-dom';
 import styles from './AuthPage.module.scss';
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import authService from "../../service/authService";
+import {useAppSelector} from "../../hooks/useAppSelector";
+import {clearAuthError} from "../../store/slices/authSlice";
+import ErrorPage from "../errorPage";
 
 const AuthPage = (): ReactElement => {
     const [login, setLogin] = useState<string>("");
@@ -11,33 +15,16 @@ const AuthPage = (): ReactElement => {
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/; // format: username, domain name, domain zone
     const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; //min 8 characters and at least 1 letter and 1 number
 
+    const error = useAppSelector((state) => state.auth.error);
+    const isAuth: boolean = useAppSelector((state) => state.auth.isAuth);
     const passwordRef = useRef<HTMLInputElement>(null);
     const dispatch = useAppDispatch();
+    const navigate = useNavigate();
     const url: string = 'http://localhost:8084/api/v1/auth/authenticate';
-
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-         if (!emailPattern.test(login)) {
-        setErrorLogin("Invalid email address");
-        return;
-    }
-
-    if (!passwordPattern.test(password)) {
-        setErrorPassword("Password must be at least 8 characters long, including at least 1 letter and 1 number");
-        return;
-    }
-
-    dispatch(authService({
-        url: url,
-        credentials: {
-            email: login,
-            password: password
-        }
-    }));
-    };
 
     const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);
+        dispatch(clearAuthError());
     };
 
     const validationPassword = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,6 +45,7 @@ const AuthPage = (): ReactElement => {
 
     const handleChangeLogin = (e: React.ChangeEvent<HTMLInputElement>) => {
         setLogin(e.target.value);
+        dispatch(clearAuthError());
     };
 
     const clearPasswordError = () => {
@@ -75,6 +63,48 @@ const AuthPage = (): ReactElement => {
         }
     };
 
+    const submitForm = () => {
+        dispatch(clearAuthError());
+        if (!emailPattern.test(login)) {
+            setErrorLogin("Invalid email address");
+            return;
+        }
+
+        if (!passwordPattern.test(password)) {
+            setErrorPassword("Password must be at least 8 characters long, including at least 1 letter and 1 number");
+            return;
+        }
+
+        dispatch(authService({
+            url: url,
+            credentials: {
+                email: login,
+                password: password
+            }
+        }));
+    };
+
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        submitForm();
+    };
+
+    const handleKeyDownPassword = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            submitForm();
+        }
+    };
+
+    useEffect(() => {
+        if (isAuth) {
+            navigate('/', {replace: true});
+        }
+    }, [isAuth, navigate]);
+
+    if (error && error !== "Incorrect login or password") {
+        return <ErrorPage error={error}/>;
+    }
     return (
         <div className={styles.container}>
             <form className={styles.form}
@@ -84,7 +114,11 @@ const AuthPage = (): ReactElement => {
                     type="text"
                     placeholder="Логин"
                     value={login}
-                    onFocus={clearLoginError}
+                    onFocus={() => {
+                        clearLoginError();
+                        dispatch(clearAuthError());
+                    }
+                    }
                     onChange={handleChangeLogin}
                     onBlur={validationLogin}
                     onKeyDown={handleKeyDown}
@@ -92,14 +126,20 @@ const AuthPage = (): ReactElement => {
 
                 />
                 {errorLogin && <span className="errorMessage">{errorLogin}</span>}
+                {error === "Incorrect login or password" && <span>{error}</span>}
                 <input
                     ref={passwordRef}
                     type="password"
                     placeholder="Пароль"
                     value={password}
-                    onFocus={clearPasswordError}
+                    onFocus={() => {
+                        clearPasswordError();
+                        dispatch(clearAuthError());
+                    }
+                    }
                     onChange={handleChangePassword}
                     onBlur={validationPassword}
+                    onKeyDown={handleKeyDownPassword}
                     className={`${styles.input} ${errorPassword ? styles.errorBorder : ""}`}
                 />
                 {errorPassword && <span className="errorMessage">{errorPassword}</span>}

@@ -3,14 +3,15 @@ import tasksDataReducer from "./slices/tasksDataSlice";
 import burgerMenuReducer from "./slices/burgerMenuSlice";
 import solutionReducer from "./slices/solutionResponseSlice";
 import authReducer from "./slices/authSlice";
+import registrationReducer from "./slices/registerSlice";
 
 const store = configureStore({
     reducer: {
         tasksData: tasksDataReducer,
         burgerMenu: burgerMenuReducer,
         serverResponse: solutionReducer,
-        auth: authReducer
-
+        auth: authReducer,
+        registration: registrationReducer
     },
 });
 

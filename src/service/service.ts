@@ -58,7 +58,8 @@ const getTasks = createAsyncThunk<
 
             const response: AxiosResponse<TasksData> = await axios.post<TasksData>(
                 url,
-                tasksRequestBody
+                tasksRequestBody,
+                { withCredentials: true }
             );
 
             return response.data;
