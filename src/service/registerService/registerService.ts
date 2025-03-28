@@ -3,7 +3,7 @@ import axios, {AxiosResponse, AxiosError} from "axios";
 
 interface AuthCredentials {
     username: string;
-    email: string;
+    login: string;
     password: string;
     role: string;
 }
