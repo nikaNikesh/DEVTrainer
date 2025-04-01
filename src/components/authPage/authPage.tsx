@@ -13,6 +13,8 @@ const AuthPage: React.FC = () => {
         errorLogin,
         errorPassword,
         handleChange,
+        validateLogin,
+        validatePassword,
         submitForm,
         setErrorLogin,
         setErrorPassword,
@@ -52,7 +54,7 @@ const AuthPage: React.FC = () => {
                     placeholder="Логин"
                     value={login}
                     onChange={(e) => handleChange(e, 'login')}
-                    onBlur={() => setErrorLogin("")}
+                    onBlur={() => validateLogin()}
                     onFocus={() => setErrorLogin("")}
                     error={errorLogin}
                 />
@@ -62,7 +64,7 @@ const AuthPage: React.FC = () => {
                     placeholder="Пароль"
                     value={password}
                     onChange={(e) => handleChange(e, 'password')}
-                    onBlur={() => setErrorPassword("")}
+                    onBlur={() => validatePassword()}
                     onFocus={() => setErrorPassword("")}
                     onKeyDown={handleKeyDownPassword}
                     error={errorPassword}

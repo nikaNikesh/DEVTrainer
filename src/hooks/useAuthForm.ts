@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { useAppDispatch } from "./useAppDispatch";
 import authService from '../service/authService';
 import registerService from '../service/registerService';
-import { clearAuthError } from '../store/slices/authSlice';
 import { clearRegistrationError } from '../store/slices/registerSlice';
 
 const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-z]{2,6}$/;
-const passwordPattern = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[^\sА-Яа-я]{8,}$/;
+
 
 type AuthMode = 'login' | 'register';
 
@@ -31,13 +31,19 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof typeo
     handlers[field](e.target.value);
 };
 
-    const validateForm = () => {
+    const validateLogin = () => {
         let isValid = true;
 
         if (!emailPattern.test(login)) {
             setErrorLogin('Invalid email address');
             isValid = false;
         }
+
+        return isValid;
+    };
+
+     const validatePassword = () => {
+        let isValid = true;
 
         if (!passwordPattern.test(password)) {
             setErrorPassword('Password must be at least 8 characters long, including at least 1 letter and 1 number');
@@ -48,7 +54,7 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof typeo
     };
 
     const submitForm = () => {
-        if (!validateForm()) return;
+        if (!validateLogin() || !validatePassword()) return;
 
         if (mode === 'login') {
             dispatch(authService({
@@ -63,15 +69,26 @@ const handleChange = (e: React.ChangeEvent<HTMLInputElement>, field: keyof typeo
         }
     };
 
+    const clearError = (field: string) => {
+        if (field === 'login') {
+             setErrorLogin("");
+        } else {
+            setErrorPassword("");
+        }
+    };
+
     return {
         login,
         password,
         username,
         errorLogin,
         errorPassword,
+        validateLogin,
+        validatePassword,
         handleChange,
         submitForm,
         setErrorLogin,
         setErrorPassword,
+        clearError
     };
 };
