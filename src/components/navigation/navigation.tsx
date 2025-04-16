@@ -3,12 +3,14 @@ import {Link, useLocation} from "react-router-dom";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {closeBurgerMenu} from "../../store/slices/burgerMenuSlice";
+import {openModal} from "../../store/slices/modalWindowSlice";
 
 import styles from './Navigation.module.scss';
 
 const Navigation = (): ReactElement => {
 
     const isVisible = useAppSelector((state) => state.burgerMenu.isVisible);
+    const isAuth = useAppSelector((state) => state.auth.isAuth);
     const location = useLocation();
     const dispatch = useAppDispatch();
 
@@ -23,13 +25,26 @@ const Navigation = (): ReactElement => {
                     <li className={styles.siteNavItem}>
                         <Link to={"/"}>Home</Link>
                     </li>
-                    <li className={styles.siteNavItem}>
+                    <li className={isAuth ? styles.siteNavItem : styles.hidden}>
                         <Link to={"tasks/"}>Tasks</Link>
                     </li>
-                    <li className={styles.siteNavItem}>
-                        <Link to={"auth/"}>Log in</Link>
-                    </li>
-                    <li className={styles.siteNavItem}>
+                    {isAuth ? (
+                        <li
+                            className={styles.siteNavItem}>
+                            <button
+                                className={styles.button}
+                                onClick={() => {
+                                    dispatch(openModal())
+                                }}>
+                                Log out
+                            </button>
+                        </li>
+                    ) : (
+                        <li className={styles.siteNavItem}>
+                            <Link to={"auth/"}>Log in</Link>
+                        </li>)
+                    }
+                    <li className={isAuth ? styles.hidden : styles.siteNavItem}>
                         <Link to={"register/"}>Sign up</Link>
                     </li>
                 </ul>

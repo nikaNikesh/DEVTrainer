@@ -10,7 +10,7 @@ const TaskDetails = (): ReactElement => {
 
     const {taskId} = useParams();
     const dispatch = useAppDispatch();
-    const url: string = 'http://localhost:8084/api/v1/tasks';
+    const url: string = 'https://localhost:8443/api/v1/tasks';
     const tasksSolutionState = localStorage.getItem(taskId!);
 
     return (

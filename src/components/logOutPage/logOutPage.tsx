@@ -1,0 +1,54 @@
+import React, {ReactElement, useEffect} from 'react';
+import styles from './LogOutPage.module.scss';
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {closeModal} from "../../store/slices/modalWindowSlice";
+import {useAppSelector} from "../../hooks/useAppSelector";
+import {useNavigate} from "react-router-dom";
+import logOutService from "../../service/logOutService";
+import {toggleIsAuth} from "../../store/slices/authSlice";
+import {toggleIsLogOut} from "../../store/slices/logOutSlice";
+
+const LogOutPage = (): ReactElement | null => {
+    const navigate = useNavigate();
+    const dispatch = useAppDispatch();
+    const isOpen = useAppSelector((state) => state.modalWindow.isOpen);
+    const error = useAppSelector((state) => state.logOut.error);
+    const isLogOut = useAppSelector((state) => state.logOut.isLogOut);
+    const url: string = 'https://localhost:8443/api/v1/auth/logout';
+
+    useEffect(() => {
+        if (error === "Unauthorized access" || isLogOut) {
+            dispatch(closeModal());
+            dispatch(toggleIsAuth());
+            dispatch(toggleIsLogOut());
+            navigate("auth/", {replace: true});
+        }
+    }, [error, isLogOut]);
+
+    if (!isOpen) return null
+    return (
+        <div className={styles.modal}>
+            <div className={styles.modalContent}>
+                <h2 className={styles.title}>Вы уверены, что хотите покинуть страницу?</h2>
+                <button
+                    type="submit"
+                    className={styles.button}
+                     onClick={() => {
+                        dispatch(logOutService(url))
+                    }}>
+                    Да
+                </button>
+                <button
+                    type="submit"
+                    className={styles.button}
+                    onClick={() => {
+                        dispatch(closeModal())
+                    }}>
+                    Отмена
+                </button>
+            </div>
+        </div>
+    );
+};
+
+export default LogOutPage;

@@ -27,7 +27,7 @@ const getTasks = createAsyncThunk<
     TasksRequestBody & { url: string },
     { rejectValue: string }
 >(
-    'tasks/fetchTasks',
+    'tasksData/fetchTasks',
     async ({
                url,
                page,

@@ -1,33 +1,30 @@
 import {createSlice} from "@reduxjs/toolkit";
-import authService from "../../../service/authService";
+import logOutService from "../../../service/logOutService";
 
 interface AuthState {
-    isAuth: boolean;
+    isLogOut: boolean;
     loading: boolean;
     error: string | null;
 }
 
 const initialState: AuthState = {
-    isAuth: false,
+    isLogOut: false,
     loading: false,
     error: null
 }
 
-const authSlice = createSlice({
+const logOutSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-        clearAuthError: (state) => {
-            state.error = null;
-        },
-        toggleIsAuth: (state) => {
-            state.isAuth = !state.isAuth;
+     toggleIsLogOut: (state) => {
+            state.isLogOut = false;
         },
     },
     extraReducers: (builder) => {
         builder
             .addCase(
-                authService.pending,
+                logOutService.pending,
                 (state) => {
 
                     state.loading = true;
@@ -35,16 +32,16 @@ const authSlice = createSlice({
             )
 
             .addCase(
-                authService.fulfilled,
+                logOutService.fulfilled,
                 (state) => {
 
-                    state.isAuth = true;
+                    state.isLogOut = true;
                     state.loading = false;
                 }
             )
 
             .addCase(
-                authService.rejected,
+                logOutService.rejected,
                 (state, action) => {
 
                     state.loading = false;
@@ -55,7 +52,6 @@ const authSlice = createSlice({
 });
 
 export const {
-    clearAuthError,
-    toggleIsAuth
-} = authSlice.actions;
-export default authSlice.reducer;
+    toggleIsLogOut
+} = logOutSlice.actions;
+export default logOutSlice.reducer;

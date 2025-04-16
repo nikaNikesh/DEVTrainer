@@ -19,7 +19,7 @@ const RegisterPage = (): ReactElement => {
     const passwordRef = useRef<HTMLInputElement>(null);
     const loginRef = useRef<HTMLInputElement>(null);
     const dispatch = useAppDispatch();
-    const url: string = 'http://localhost:8084/api/v1/auth/register';
+    const url: string = 'https://localhost:8443/api/v1/auth/register';
     const error = useAppSelector((state) => state.registration.error);
     const isRegistered: boolean = useAppSelector((state) => state.registration.isRegistered);
     const navigate = useNavigate();
@@ -42,8 +42,7 @@ const RegisterPage = (): ReactElement => {
             credentials: {
                 username: username,
                 email: login,
-                password: password,
-                role: 'USER'
+                password: password
             }
         }));
     };
