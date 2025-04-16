@@ -1,11 +1,10 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import axios, {AxiosResponse, AxiosError} from "axios";
+import axios, {AxiosResponse} from "axios";
 
 interface AuthCredentials {
     username: string;
     email: string;
     password: string;
-    role: string;
 }
 
 interface AuthPayload {
@@ -24,10 +23,12 @@ const registerService = createAsyncThunk<
     AuthPayload,
     { rejectValue: string }
 >(
-    'authLogin',
+    'auth/register',
     async ({url, credentials}, {rejectWithValue}) => {
         try {
-            const response: AxiosResponse<void> = await axios.post(url, credentials);
+            const response: AxiosResponse<void> = await axios.post(url, credentials, {
+  withCredentials: true
+});
             return;
         } catch (error) {
 

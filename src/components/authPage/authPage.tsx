@@ -20,7 +20,7 @@ const AuthPage = (): ReactElement => {
     const passwordRef = useRef<HTMLInputElement>(null);
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
-    const url: string = 'http://localhost:8084/api/v1/auth/authenticate';
+    const url: string = 'https://localhost:8443/api/v1/auth/authenticate';
 
     const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
         setPassword(e.target.value);

@@ -19,7 +19,7 @@ interface Task {
 
 const Task = (): ReactElement => {
     const pageSize: number = 5;
-    const url: string = 'http://localhost:8084/api/v1/tasks';
+    const url: string = 'https://localhost:8443/api/v1/tasks';
     const dispatch = useAppDispatch();
 
     const currentPage = useAppSelector((state) => state.tasksData.currentPage);
