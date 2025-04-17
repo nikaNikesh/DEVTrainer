@@ -1,31 +1,22 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios, {AxiosResponse} from "axios";
 
-interface AuthCredentials {
-    login: string;
-    password: string;
-}
-
-interface AuthPayload {
-    url: string;
-    credentials: AuthCredentials;
-}
 
 const ERROR_MESSAGES = {
-    UNAUTHORIZED: "Incorrect login or password",
+    UNAUTHORIZED: "Unauthorized access",
     SERVER_NOT_RESPONDING: "Server not responding - check your internet connection",
     UNEXPECTED_ERROR: "Unexpected error occurred",
 };
 
-const authService = createAsyncThunk<
+const logOutService = createAsyncThunk<
     void,
-    AuthPayload,
+    string,
     { rejectValue: string }
 >(
-    'auth/login',
-    async ({url, credentials}, {rejectWithValue}) => {
+    'auth/logOut',
+    async (url, {rejectWithValue}) => {
         try {
-            const response: AxiosResponse<void> = await axios.post(url, credentials, {
+            const response: AxiosResponse<void> = await axios.get(url, {
   withCredentials: true
 });
             return;
@@ -47,5 +38,5 @@ const authService = createAsyncThunk<
     }
 );
 
-export default authService;
+export default logOutService;
 

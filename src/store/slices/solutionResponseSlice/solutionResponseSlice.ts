@@ -12,7 +12,7 @@ const initialState: ServerResponse = {
 }
 
 const solutionResponseSlice = createSlice({
-    name: 'serverResponse',
+    name: 'solution',
     initialState,
     reducers: {},
     extraReducers: (builder) => {

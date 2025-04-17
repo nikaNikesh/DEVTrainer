@@ -15,6 +15,10 @@
     overflow-y: auto;
   }
 
+  .hidden {
+    display: none;
+  }
+
   .siteNavList {
     margin: 25px;
     display: flex;
@@ -23,9 +27,13 @@
     align-items: flex-start;
     gap: 30px;
 
-    li {
+    .siteNavItem {
       text-transform: uppercase;
       font-weight: bold;
+
+      .button {
+         all: unset;
+      }
     }
   }
 

@@ -12,6 +12,7 @@ import Footer from "../footer";
 import TaskDetails from "../taskDetails";
 import AuthPage from "../authPage";
 import RegisterPage from "../registerPage";
+import LogOutPage from "../logOutPage";
 
 const App = (): ReactElement => {
 
@@ -28,6 +29,7 @@ const App = (): ReactElement => {
                         <Route path="auth" element={<AuthPage/>}/>
                         <Route path="register" element={<RegisterPage/>}/>
                     </Routes>
+                    <LogOutPage/>
                     <Footer/>
                 </div>
             </BrowserRouter>
