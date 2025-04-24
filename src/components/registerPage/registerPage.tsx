@@ -1,11 +1,10 @@
 import React, {useRef} from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/useAppSelector';
-import ErrorPage from '../errorPage';
+import {useNavigate} from 'react-router-dom';
+import {useAppSelector} from '../../hooks/useAppSelector';
 import InputField from "../input";
-import { useAuthForm } from '../../hooks/useAuthForm';
-import { clearRegistrationError } from "../../store/slices/registerSlice";
+import {useAuthForm} from '../../hooks/useAuthForm';
 import styles from './RegisterPage.module.scss';
+import {useAppDispatch} from "../../hooks/useAppDispatch";
 
 const RegisterPage: React.FC = () => {
     const {
@@ -14,6 +13,8 @@ const RegisterPage: React.FC = () => {
         username,
         errorLogin,
         errorPassword,
+        validateLogin,
+        validatePassword,
         handleChange,
         submitForm,
         clearError
@@ -26,20 +27,24 @@ const RegisterPage: React.FC = () => {
     const loginRef = useRef<HTMLInputElement>(null);
 
     React.useEffect(() => {
-        if (isRegistered) navigate('/', { replace: true });
+        if (isRegistered) navigate('/', {replace: true});
     }, [isRegistered, navigate]);
 
     if (error && error !== 'This login is already registered') {
-        return <ErrorPage error={error} />;
+        navigate('/error', {
+            state: {
+                errorMessage: error,
+            }
+        });
     }
 
-     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             e.preventDefault();
             passwordRef.current?.focus();
         }
     };
-       const handleKeyDownToLogin = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDownToLogin = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             e.preventDefault();
             loginRef.current?.focus();
@@ -49,10 +54,13 @@ const RegisterPage: React.FC = () => {
 
     return (
         <div className={styles.container}>
-            <form className={styles.form} onSubmit={(e) => { e.preventDefault(); submitForm(); }}>
+            <form className={styles.form} onSubmit={(e) => {
+                e.preventDefault();
+                submitForm();
+            }}>
                 <h2 className={styles.title}>Регистрация</h2>
                 <InputField
-                   type="text"
+                    type="text"
                     placeholder="Username"
                     value={username}
                     onChange={(e) => handleChange(e, 'username')}
@@ -64,22 +72,26 @@ const RegisterPage: React.FC = () => {
                     value={login}
                     onFocus={() => {
                         clearError('login');
-                        dispatch(clearRegistrationError());
                     }}
-                    onChange={handleChangeLogin}
-                    onBlur={validationLogin}
+                    onChange={(e) => handleChange(e, 'login')}
+                    onBlur={() => validateLogin()}
                     onKeyDown={handleKeyDown}
+                    error={errorLogin}
                     inputRef={loginRef}
                 />
                 {error === 'This login is already registered' && <span>{error}</span>}
                 <InputField
-                    ref={passwordRef}
                     type="password"
                     placeholder="Password"
                     value={password}
-                    onFocus={clearPasswordError}
-                    onChange={handleChangePassword}
-                    onBlur={validationPassword}
+                    onFocus={() => {
+                        clearError('password');
+                    }
+                    }
+                    onChange={(e) => handleChange(e, 'password')}
+                    onBlur={() => validatePassword()}
+                    error={errorPassword}
+                    inputRef={passwordRef}
                 />
                 <button type="submit" className={styles.button}>
                     Зарегистрироваться

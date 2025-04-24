@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/useAppSelector';
-import ErrorPage from '../errorPage';
 import InputField from "../input";
 import { useAuthForm } from "../../hooks/useAuthForm";
 import styles from './AuthPage.module.scss';
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {clearAuthError} from "../../store/slices/authSlice";
 
 const AuthPage: React.FC = () => {
     const {
@@ -21,27 +22,35 @@ const AuthPage: React.FC = () => {
     } = useAuthForm('login');
 
     const error = useAppSelector((state) => state.auth.error);
+    console.log('error:', error);
+
     const isAuth = useAppSelector((state) => state.auth.isAuth);
     const navigate = useNavigate();
     const passwordRef = React.useRef<HTMLInputElement>(null);
+    const loginRef = React.useRef<HTMLInputElement>(null);
+    const dispatch = useAppDispatch();
 
-    React.useEffect(() => {
-        if (isAuth) navigate('/', { replace: true });
-    }, [isAuth, navigate]);
-
-    if (error && error !== "Incorrect login or password") {
-        return <ErrorPage error={error} />;
-    }
+    useEffect(() => {
+        if (isAuth) {
+            navigate('/', { replace: true });
+        } else if (error && error !== "Incorrect login or password") {
+            navigate('/error', {
+                state: {
+                    errorMessage: error,
+                }
+            });
+        }
+    }, [isAuth, error, navigate]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         submitForm();
     };
 
-    const handleKeyDownPassword = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
+   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
             e.preventDefault();
-            submitForm();
+            passwordRef.current?.focus();
         }
     };
 
@@ -56,7 +65,9 @@ const AuthPage: React.FC = () => {
                     onChange={(e) => handleChange(e, 'login')}
                     onBlur={() => validateLogin()}
                     onFocus={() => setErrorLogin("")}
+                    onKeyDown={handleKeyDown}
                     error={errorLogin}
+                    inputRef={loginRef}
                 />
                 {error === "Incorrect login or password" && <span>{error}</span>}
                 <InputField
@@ -66,7 +77,6 @@ const AuthPage: React.FC = () => {
                     onChange={(e) => handleChange(e, 'password')}
                     onBlur={() => validatePassword()}
                     onFocus={() => setErrorPassword("")}
-                    onKeyDown={handleKeyDownPassword}
                     error={errorPassword}
                     inputRef={passwordRef}
                 />
