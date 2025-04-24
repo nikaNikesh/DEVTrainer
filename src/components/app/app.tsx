@@ -13,6 +13,7 @@ import TaskDetails from "../taskDetails";
 import AuthPage from "../authPage";
 import RegisterPage from "../registerPage";
 import LogOutPage from "../logOutPage";
+import ErrorPage from "../errorPage";
 
 const App = (): ReactElement => {
 
@@ -28,6 +29,7 @@ const App = (): ReactElement => {
                         <Route path="tasks/:taskId" element={<TaskDetails/>}/>
                         <Route path="auth" element={<AuthPage/>}/>
                         <Route path="register" element={<RegisterPage/>}/>
+                        <Route path="error" element={<ErrorPage/>}/>
                     </Routes>
                     <LogOutPage/>
                     <Footer/>

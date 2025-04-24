@@ -1,14 +1,21 @@
-import React, {ReactElement} from 'react';
+import React, {ReactElement, useEffect} from 'react';
+import { useLocation } from "react-router-dom";
 import styles from './ErrorPage.module.scss';
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {clearAuthError} from "../../store/slices/authSlice";
 
-interface ErrorPageProps {
-  error: string;
-}
+const ErrorPage= (): ReactElement => {
+    const location = useLocation();
+    const errorMessage = location.state?.errorMessage;
+    const dispatch = useAppDispatch();
 
-const ErrorPage: React.FC<ErrorPageProps>  = ( {error}): ReactElement => {
+    useEffect(() => {
+        dispatch(clearAuthError());
+    }, [dispatch]);
+
   return (
       <div className={styles.errorContainer}>
-        <h1 className={styles.title}>{error}</h1>
+        <h1 className={styles.title}>{errorMessage}</h1>
       </div>
   );
 };
