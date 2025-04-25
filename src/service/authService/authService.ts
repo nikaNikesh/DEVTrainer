@@ -2,7 +2,7 @@ import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios, {AxiosResponse} from "axios";
 
 interface AuthCredentials {
-    login: string;
+    email: string;
     password: string;
 }
 

@@ -54,12 +54,12 @@ export const useAuthForm = (mode: AuthMode = 'login') => {
 
         if (mode === 'login') {
             dispatch(authService({
-                url: '/api/v1/auth/authenticate',
-                credentials: {login, password},
+                url: 'https://localhost:8443/api/v1/auth/authenticate',
+                credentials: {email: login, password},
             }));
         } else {
             dispatch(registerService({
-                url: '/api/v1/auth/register',
+                url: 'https://localhost:8443/api/v1/auth/register',
                 credentials: {username, login, password},
             }));
         }
