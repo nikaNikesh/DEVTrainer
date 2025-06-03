@@ -15,21 +15,25 @@
     opacity: 1;
     visibility: visible;
   }
-}
 
-.modalContent {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
-  max-width: 500px;
-  width: 90%;
-}
+  .modalContent {
+    display: flex;
+    flex-direction: column;
+    gap: 36px;
+    background-color: var(--color-main-background);
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 500px;
+    width: 90%;
+    border: 1px solid rgba(192, 158, 89, 0.05);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05),
+                0 4px 16px rgba(0, 0, 0, 0.6);
 
-.button {
-  background: #ff4757;
-  color: white;
-  border: none;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  margin-top: 1rem;
+    .buttonsContainer {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+    }
+  }
 }

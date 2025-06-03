@@ -14,9 +14,11 @@ const ErrorPage= (): ReactElement => {
     }, [dispatch]);
 
   return (
+   <main className={styles.main}>
       <div className={styles.errorContainer}>
         <h1 className={styles.title}>{errorMessage}</h1>
       </div>
+   </main>
   );
 };
 

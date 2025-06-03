@@ -1,6 +1,7 @@
 html {
-  height: 100vh;
   font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: 1.5;
   scroll-behavior: smooth;
 }
 
@@ -14,9 +15,8 @@ html {
 
 body {
   min-width: 360px;
-  height: 100vh;
-  font-size: 16px;
-  line-height: 1.5;
+  min-height: 100vh;
+  background-color: var(--color-main-background);
   color: var(--color-beige);
 }
 
@@ -35,6 +35,16 @@ ul {
   list-style: none;
 }
 
+button {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+  &:focus { outline: auto; }
+}
+
 input,
 textarea,
 select,
@@ -42,16 +52,11 @@ button {
   font: inherit;
 }
 
-#root {
-
-
-}
-
 main {
   max-width: var(--content-width);
   margin: 0 auto;
   padding: 0 20px;
   border: 0;
-  background-color: var(--color-light-dark);
+  background-color: var(--color-main-background);
 }
 

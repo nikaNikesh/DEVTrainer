@@ -10,7 +10,7 @@
     top: 0;
     max-height: 700px;
     height: 60vh;
-    font-size: 1.25rem;
+    font-size: var(--font-size-medium);
     background-color: var(--color-green);
     overflow-y: auto;
   }

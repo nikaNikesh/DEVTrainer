@@ -1,5 +1,5 @@
 $main-background-color: #1f1f1f;
-$light-background-color: adjust-color($main-background-color, $lightness: 15%);
+$light-background-color: var(--color-main-super-light-background);
 $dark-background-color: adjust-color($main-background-color, $lightness: -3%);
 .main {
   grid-area: 2/2/3/3;

@@ -1,4 +1,4 @@
-$main-background-color: #1f1f1f;
+
 .selectContainer {
   cursor: pointer;
   position: relative;
@@ -13,13 +13,13 @@ $main-background-color: #1f1f1f;
     left: 0;
     font-weight: bold;
     border: 1px solid var(--color-beige);
-    background-color: adjust-color($main-background-color, $lightness: 10%);
+    background-color: var(--color-main-light-background);
     color: var(--color-beige);
     transition: all 0.2s ease-in;
     padding: 8px 15px;
 
     &:hover {
-      background-color: adjust-color($main-background-color, $lightness: 15%);
+      background-color: var(--color-main-super-light-background);
     }
 
     &:after {
@@ -54,7 +54,7 @@ $main-background-color: #1f1f1f;
     padding: 0;
     border: 1px solid var(--color-beige);
     list-style: none;
-    background-color: adjust-color($main-background-color, $lightness: 10%);
+    background-color: var(--color-main-light-background);
 
     .option {
       margin: 0;
@@ -64,7 +64,7 @@ $main-background-color: #1f1f1f;
       transition: all 0.15s ease-in;
 
       &:hover {
-      background-color: adjust-color($main-background-color, $lightness: 15%);
+      background-color: var(--color-main-super-light-background);
     }
     }
   }
