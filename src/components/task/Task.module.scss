@@ -1,44 +1,67 @@
-.taskCards {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  margin: 0 auto;
+.tasksMainContent {
+  grid-area: 2/2/3/3;
+  overflow: hidden;
 
-  .taskCardItem {
-    display: flex;
-    align-items: center;
+  .tasksSection {
+    height: 100%;
     width: 100%;
-    gap: 20px;
 
-    .NO {
-      flex: 0 0 50px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+    background-color: var(--color-light-dark);
+
+    .taskCards {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin: 0 auto;
+
+      .taskCardItem {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        gap: 20px;
+
+        .NO {
+          flex: 0 0 50px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .name {
+          flex: 1 1 auto;
+          min-width: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+
+          .name_title {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+          }
+        }
+
+        .difficulty {
+          flex: 0 0 70px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+        .solutions {
+          flex: 0 0 50px;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+        }
+
+      }
     }
+  }
+}
 
-    .name {
-      flex: 1 1 50px;
-      min-width: 0;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-
-    }
-
-    .difficulty {
-      flex: 0 0 70px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
-    .solutions {
-      flex: 0 0 50px;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-    }
-
+@media (max-width: 767px) {
+  .tasksMainContent  {
+    grid-area: 2/1/3/2;;
   }
 }

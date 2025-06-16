@@ -6,7 +6,7 @@ import store from "../../store";
 import Header from "../header";
 import Navigation from "../navigation";
 import Home from "../home";
-import Tasks from "../tasks";
+import Task from "../task";
 import styles from "./App.module.scss";
 import Footer from "../footer";
 import TaskDetails from "../taskDetails";
@@ -25,7 +25,7 @@ const App = (): ReactElement => {
                     <Navigation/>
                     <Routes>
                         <Route path="/" element={<Home/>}/>
-                        <Route path="tasks" element={<Tasks/>}/>
+                        <Route path="tasks" element={<Task/>}/>
                         <Route path="tasks/:taskId" element={<TaskDetails/>}/>
                         <Route path="auth" element={<AuthPage/>}/>
                         <Route path="register" element={<RegisterPage/>}/>
