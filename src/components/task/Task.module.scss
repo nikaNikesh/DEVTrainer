@@ -2,66 +2,90 @@
   grid-area: 2/2/3/3;
   overflow: hidden;
 
-  .tasksSection {
-    height: 100%;
+  .taskCards {
+    display: flex;
+    flex-direction: column;
     width: 100%;
+    margin: 0 auto;
 
-    background-color: var(--color-light-dark);
-
-    .taskCards {
+    .taskCardItem {
       display: flex;
-      flex-direction: column;
+      align-items: center;
       width: 100%;
-      margin: 0 auto;
+      gap: 20px;
 
-      .taskCardItem {
-        display: flex;
-        align-items: center;
-        width: 100%;
-        gap: 20px;
-
-        .NO {
-          flex: 0 0 50px;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-
-        .name {
-          flex: 1 1 auto;
-          min-width: 0;
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-
-          .name_title {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-          }
-        }
-
-        .difficulty {
-          flex: 0 0 70px;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-
-        .solutions {
-          flex: 0 0 50px;
-          overflow: hidden;
-          white-space: nowrap;
-          text-overflow: ellipsis;
-        }
-
+      .NO {
+        flex: 0 0 30px;
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
+
+      .name {
+        flex: 1 1 auto;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .difficulty {
+        flex: 0 0 70px;
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .solutions {
+        flex: 0 0 70px;
+        text-align: center;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      .thead {
+        font-weight: bold;
+      }
+    }
+  }
+
+  .pagination {
+    display: flex;
+    align-items: center;
+
+    .arrowPrev::before,
+    .arrowNext::after {
+      content: "";
+      display: inline-block;
+      width: 0;
+      height: 0;
+    }
+
+    .arrowPrev::before {
+      margin-right: 12px;
+      border-right: 10px solid var(--color-beige);
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+    }
+
+    .arrowNext::after {
+      margin-left: 12px;
+      border-left: 10px solid var(--color-beige);
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+    }
+
+    .selectedPage {
+      font-weight: bold;
     }
   }
 }
 
 @media (max-width: 767px) {
-  .tasksMainContent  {
+  .tasksMainContent {
     grid-area: 2/1/3/2;;
   }
 }
