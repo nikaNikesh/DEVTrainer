@@ -1,0 +1,25 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  align-self: end;
+  width: fit-content;
+  color: var(--color-beige);
+  font-weight: bold;
+  background-color: var(--color-main-light-background);
+  transition: all 0.2s ease;
+  border: 1px solid var(--color-beige);
+  border-radius: 2px;
+
+  &:hover { background-color: var(--color-main-super-light-background); }
+
+  &.small { padding: 8px 12px; font-size: 16px; }
+  &.medium { padding: 12px 24px; }
+  &.large { padding: 16px 32px; font-size: 18px; }
+
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}

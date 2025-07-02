@@ -1,3 +1,4 @@
+/*
 import React, {ReactElement} from "react";
 import Task from "../task";
 import styles from './Tasks.module.scss';
@@ -16,5 +17,6 @@ const Tasks = (): ReactElement => {
 }
 
 export default Tasks;
+*/
 
 

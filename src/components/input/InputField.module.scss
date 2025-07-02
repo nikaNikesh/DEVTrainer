@@ -1,0 +1,40 @@
+.errorInputContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+
+  .input {
+    padding: 10px;
+    margin-bottom: 10px;
+    color: var(--color-beige);
+    background-color: var(--color-main-light-background);
+    border: 1px solid var(--color-beige);
+    border-radius: 2px;
+
+    &:focus {
+      outline: none;
+      border: 1px solid var(--color-beige);
+      box-shadow: 0 0 6px rgba(192, 158, 89, 0.6);
+    }
+
+    &:hover {
+      background-color: var(--color-main-super-light-background);
+    }
+
+    &.errorBorder {
+      border-color: #780606;
+      background-color: var(--color-burgundy);
+      color: white;
+
+
+      &::placeholder {
+        color: #780606;
+      }
+    }
+  }
+
+  .errorMessage {
+    font-size: var(--font-size-small);
+  }
+
+}

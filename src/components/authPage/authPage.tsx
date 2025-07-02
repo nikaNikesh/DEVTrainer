@@ -1,11 +1,12 @@
 import React, {useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useAppSelector } from '../../hooks/useAppSelector';
+import {useNavigate} from 'react-router-dom';
+import {useAppSelector} from '../../hooks/useAppSelector';
 import InputField from "../input";
-import { useAuthForm } from "../../hooks/useAuthForm";
+import {useAuthForm} from "../../hooks/useAuthForm";
 import styles from './AuthPage.module.scss';
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {clearAuthError} from "../../store/slices/authSlice";
+import Button from "../button";
 
 const AuthPage: React.FC = () => {
     const {
@@ -22,7 +23,6 @@ const AuthPage: React.FC = () => {
     } = useAuthForm('login');
 
     const error = useAppSelector((state) => state.auth.error);
-    console.log('error:', error);
 
     const isAuth = useAppSelector((state) => state.auth.isAuth);
     const navigate = useNavigate();
@@ -32,7 +32,7 @@ const AuthPage: React.FC = () => {
 
     useEffect(() => {
         if (isAuth) {
-            navigate('/', { replace: true });
+            navigate('/', {replace: true});
         } else if (error && error !== "Incorrect login or password") {
             navigate('/error', {
                 state: {
@@ -47,7 +47,7 @@ const AuthPage: React.FC = () => {
         submitForm();
     };
 
-   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {
             e.preventDefault();
             passwordRef.current?.focus();
@@ -55,36 +55,45 @@ const AuthPage: React.FC = () => {
     };
 
     return (
-        <div className={styles.container}>
+        <main className={styles.main}>
             <form className={styles.form} onSubmit={handleSubmit}>
-                <h2 className={styles.title}>Авторизация</h2>
-                <InputField
-                    type="text"
-                    placeholder="Логин"
-                    value={login}
-                    onChange={(e) => handleChange(e, 'login')}
-                    onBlur={() => validateLogin()}
-                    onFocus={() => setErrorLogin("")}
-                    onKeyDown={handleKeyDown}
-                    error={errorLogin}
-                    inputRef={loginRef}
-                />
-                {error === "Incorrect login or password" && <span>{error}</span>}
-                <InputField
-                    type="password"
-                    placeholder="Пароль"
-                    value={password}
-                    onChange={(e) => handleChange(e, 'password')}
-                    onBlur={() => validatePassword()}
-                    onFocus={() => setErrorPassword("")}
-                    error={errorPassword}
-                    inputRef={passwordRef}
-                />
-                <button type="submit" className={styles.button}>
-                    Войти
-                </button>
+                <h2 className={styles.title}>Log in</h2>
+                <div className={styles.inputContainer}>
+                    <InputField
+                        type="text"
+                        placeholder="Login"
+                        value={login}
+                        onChange={(e) => handleChange(e, 'login')}
+                        autocomplete='email'
+                        onBlur={() => validateLogin()}
+                        onFocus={() => setErrorLogin("")}
+                        onKeyDown={handleKeyDown}
+                        error={errorLogin}
+                        inputRef={loginRef}
+                    />
+                    {error === "Incorrect login or password" && <span>{error}</span>}
+                    <InputField
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={(e) => handleChange(e, 'password')}
+                        autocomplete="current-password"
+                        onBlur={() => validatePassword()}
+                        onFocus={() => setErrorPassword("")}
+                        error={errorPassword}
+                        inputRef={passwordRef}
+                    />
+                </div>
+
+                <Button
+                    size={'small'}
+                    type={'submit'}
+                >
+                    Log in
+                </Button>
+
             </form>
-        </div>
+        </main>
     );
 };
 

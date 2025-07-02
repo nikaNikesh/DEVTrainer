@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 import logOutService from "../../service/logOutService";
 import {toggleIsAuth} from "../../store/slices/authSlice";
 import {toggleIsLogOut} from "../../store/slices/logOutSlice";
+import Button from "../button";
 
 const LogOutPage = (): ReactElement | null => {
     const navigate = useNavigate();
@@ -30,22 +31,28 @@ const LogOutPage = (): ReactElement | null => {
         <div className={styles.modal}>
             <div className={styles.modalContent}>
                 <h2 className={styles.title}>Вы уверены, что хотите покинуть страницу?</h2>
-                <button
-                    type="submit"
-                    className={styles.button}
-                     onClick={() => {
-                        dispatch(logOutService(url))
-                    }}>
-                    Да
-                </button>
-                <button
-                    type="submit"
-                    className={styles.button}
-                    onClick={() => {
-                        dispatch(closeModal())
-                    }}>
-                    Отмена
-                </button>
+                <div className={styles.buttonsContainer}>
+                    <Button
+                        size='small'
+                        onClick={() => {
+                            dispatch(logOutService(url))
+                        }}
+                        disabled={false}
+                        type="submit"
+                    >
+                        Да
+                    </Button>
+                    <Button
+                        size='small'
+                        onClick={() => {
+                            dispatch(closeModal())
+                        }}
+                        disabled={false}
+                        type="submit"
+                    >
+                        Отмена
+                    </Button>
+                </div>
             </div>
         </div>
     );
