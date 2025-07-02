@@ -2,6 +2,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  align-self: end;
+  width: fit-content;
   color: var(--color-beige);
   font-weight: bold;
   background-color: var(--color-main-light-background);

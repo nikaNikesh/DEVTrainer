@@ -8,7 +8,7 @@ const Footer = (): ReactElement => {
         <footer className={styles.footer}>
             <div className={styles.footerContainer}>
                 <Link to="/" className={styles.logoContainer}>
-                    <img src={logo} alt="Логотип компании" className={styles.logo}/>
+                    <img src={logo} alt="company logo" className={styles.logo}/>
                     <span className={styles.name}>
                     DEVTrainer
                 </span>

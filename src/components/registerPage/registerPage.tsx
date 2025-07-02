@@ -5,6 +5,7 @@ import InputField from "../input";
 import {useAuthForm} from '../../hooks/useAuthForm';
 import styles from './RegisterPage.module.scss';
 import {useAppDispatch} from "../../hooks/useAppDispatch";
+import Button from "../button";
 
 const RegisterPage: React.FC = () => {
     const {
@@ -53,17 +54,18 @@ const RegisterPage: React.FC = () => {
 
 
     return (
-        <div className={styles.container}>
+         <main className={styles.main}>
             <form className={styles.form} onSubmit={(e) => {
                 e.preventDefault();
                 submitForm();
             }}>
-                <h2 className={styles.title}>Регистрация</h2>
+                <h2 className={styles.title}>Sign up</h2>
                 <InputField
                     type="text"
                     placeholder="Username"
                     value={username}
                     onChange={(e) => handleChange(e, 'username')}
+                    autocomplete="username"
                     onKeyDown={handleKeyDownToLogin}
                 />
                 <InputField
@@ -74,6 +76,7 @@ const RegisterPage: React.FC = () => {
                         clearError('login');
                     }}
                     onChange={(e) => handleChange(e, 'login')}
+                    autocomplete="email"
                     onBlur={() => validateLogin()}
                     onKeyDown={handleKeyDown}
                     error={errorLogin}
@@ -89,15 +92,19 @@ const RegisterPage: React.FC = () => {
                     }
                     }
                     onChange={(e) => handleChange(e, 'password')}
+                    autocomplete="current-password"
                     onBlur={() => validatePassword()}
                     error={errorPassword}
                     inputRef={passwordRef}
                 />
-                <button type="submit" className={styles.button}>
-                    Зарегистрироваться
-                </button>
+                 <Button
+                    size={'small'}
+                    type={'submit'}
+                >
+                    Sign up
+                </Button>
             </form>
-        </div>
+         </main>
     );
 };
 
