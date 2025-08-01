@@ -1,5 +1,6 @@
 import React from "react";
-import Button from "../../button";
+
+import styles from './SortIcon.module.scss';
 
 type SetterType = React.Dispatch<React.SetStateAction<'none' | 'asc' | 'desc'>>;
 
@@ -8,7 +9,7 @@ const sortIcon: React.FC<{ direction: 'none' | 'asc' | 'desc', setter: SetterTyp
         setter(prev => (prev === 'none' ? 'asc' : prev === 'asc' ? 'desc' : 'none'));
     };
     return (
-        <Button size={'small'}
+        <button
                 onClick={() => toggleSort(setter)}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -17,7 +18,7 @@ const sortIcon: React.FC<{ direction: 'none' | 'asc' | 'desc', setter: SetterTyp
                 focusable="false"
                 width="1.5em"
                 height="1.5em"
-                className="sortIcon">
+                className={styles.sortIcon}>
 
                 {direction === 'asc' ? (
                     <path fill="currentColor"
@@ -36,7 +37,7 @@ const sortIcon: React.FC<{ direction: 'none' | 'asc' | 'desc', setter: SetterTyp
                     </path>
                 )}
             </svg>
-        </Button>
+        </button>
     )
 }
 export default sortIcon;

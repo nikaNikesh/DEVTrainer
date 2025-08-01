@@ -1,14 +1,13 @@
-import React, {AutoFill} from 'react';
-import { InputHTMLAttributes } from 'react';
+import React from 'react';
 import styles from '../input/InputField.module.scss';
 
 
 interface InputFieldProps {
     type: string;
     placeholder: string;
-    value: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    autocomplete: string;
+    value?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    autocomplete?: string;
     onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     onFocus?: () => void;
     onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -16,7 +15,6 @@ interface InputFieldProps {
     inputRef?: React.Ref<HTMLInputElement>;
 }
 
-// @ts-ignore
 const InputField: React.FC<InputFieldProps> = React.memo(({
     type,
     placeholder,

@@ -9,6 +9,8 @@ import getTasks from "../../service";
 import CustomTasksFilter from "../customTasksFilter";
 import {Link} from "react-router-dom";
 import SortIcon from "../icon/sortIcon";
+import InputField from "../input";
+import SearchIcon from "../icon/searchIcon/searchIcon";
 
 interface Task {
     id: number,
@@ -38,6 +40,10 @@ const Task = (): ReactElement => {
     const [sortName, setSortName] = useState<'none' | 'asc' | 'desc'>('none');
     const [sortDifficulty, setSortDifficulty] = useState<'none' | 'asc' | 'desc'>('none');
     const [sortSolutions, setSortSolutions] = useState<'none' | 'asc' | 'desc'>('none');
+    const [searchValue, setSearchValue] = useState<string>('');
+
+    const searchValueRef = React.useRef<HTMLInputElement>(null);
+
 
     const sortConfig: SortItem[] = [
         {key: 'name', direction: sortName, setter: setSortName},
@@ -51,7 +57,7 @@ const Task = (): ReactElement => {
             page: currentPage,
             size: pageSize,
             difficulty: difficulty,
-            sort: [
+            /*sort: [
                 {
                     name: 'name',
                     direction: sortName
@@ -64,9 +70,20 @@ const Task = (): ReactElement => {
                     name: 'solutions',
                     direction: sortSolutions
                 }
-            ]
+            ]*/
         }));
-    }, [currentPage, difficulty, sortName, sortDifficulty, sortSolutions]);
+    }, [currentPage, difficulty, sortName, sortDifficulty, sortSolutions, searchValue]);
+
+    const handleSearchUpdate = () => {
+        if (searchValueRef.current) {
+            setSearchValue(searchValueRef.current.value);
+        }
+    };
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter" && searchValueRef.current) {
+            setSearchValue(searchValueRef.current.value);
+        }
+    };
 
     return (
         <main className={styles.tasksMainContent}>
@@ -77,10 +94,23 @@ const Task = (): ReactElement => {
                     {sortConfig.map(({key, direction, setter}) => {
                         return (
                             <span role="columnheader" className={`${styles[key]} ${styles.thead}`}>
-                                        <SortIcon direction={direction}
-                                                  setter={setter}
+                                {key === 'name' && (
+                                    <>
+                                        <InputField
+                                            type='search'
+                                            placeholder='Search'
+                                            onKeyDown={handleKeyDown}
+                                            inputRef={searchValueRef}
                                         />
-                                </span>
+                                        <SearchIcon handleSearchUpdate={handleSearchUpdate}
+                                        />
+                                    </>
+                                )
+                                }
+                                <SortIcon direction={direction}
+                                          setter={setter}
+                                />
+                            </span>
                         )
                     })
                     }
