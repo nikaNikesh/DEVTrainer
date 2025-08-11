@@ -87,7 +87,6 @@ const Task = (): ReactElement => {
 
     return (
         <main className={styles.tasksMainContent}>
-            <CustomTasksFilter/>
             <div className={styles.taskCards}>
                 <div className={styles.taskCardItem}>
                     <span role="columnheader" className={`${styles.NO} ${styles.thead}`}> </span>
@@ -96,14 +95,17 @@ const Task = (): ReactElement => {
                             <span role="columnheader" className={`${styles[key]} ${styles.thead}`}>
                                 {key === 'name' && (
                                     <>
-                                        <InputField
-                                            type='search'
-                                            placeholder='Search'
-                                            onKeyDown={handleKeyDown}
-                                            inputRef={searchValueRef}
-                                        />
-                                        <SearchIcon handleSearchUpdate={handleSearchUpdate}
-                                        />
+                                        <CustomTasksFilter/>
+                                        <div className={styles.inputContainer}>
+                                            <InputField
+                                                type='search'
+                                                placeholder='Search'
+                                                onKeyDown={handleKeyDown}
+                                                inputRef={searchValueRef}
+                                            />
+                                            <SearchIcon handleSearchUpdate={handleSearchUpdate}
+                                            />
+                                        </div>
                                     </>
                                 )
                                 }

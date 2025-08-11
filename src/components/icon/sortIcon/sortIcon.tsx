@@ -10,14 +10,13 @@ const sortIcon: React.FC<{ direction: 'none' | 'asc' | 'desc', setter: SetterTyp
     };
     return (
         <button
-                onClick={() => toggleSort(setter)}>
+                onClick={() => toggleSort(setter)}
+                className={styles.button}>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
                 focusable="false"
-                width="1.5em"
-                height="1.5em"
                 className={styles.sortIcon}>
 
                 {direction === 'asc' ? (
