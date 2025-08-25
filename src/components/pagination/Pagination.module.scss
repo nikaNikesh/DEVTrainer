@@ -1,0 +1,32 @@
+ .pagination {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: 80px 10px 20px;
+
+    .arrowPrev::before,
+    .arrowNext::after {
+      content: "";
+      display: inline-block;
+      width: 0;
+      height: 0;
+    }
+
+    .arrowPrev::before {
+      margin-right: 20px;
+      border-right: 10px solid var(--color-beige);
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+    }
+
+    .arrowNext::after {
+      margin-left: 20px;
+      border-left: 10px solid var(--color-beige);
+      border-top: 7px solid transparent;
+      border-bottom: 7px solid transparent;
+    }
+
+    .selectedPage {
+      font-weight: bold;
+    }
+  }

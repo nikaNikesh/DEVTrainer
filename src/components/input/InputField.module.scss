@@ -1,15 +1,30 @@
-.errorInputContainer {
+.errorInputContainer:has(input[type="password"]),
+.errorInputContainer:has(input[type="text"]) {
   display: flex;
   flex-direction: column;
   justify-content: start;
+}
 
-  .input {
+.errorInputContainer:has(input[type="search"]) {
+  display: flex;
+  align-items: center;
+  width: 190px;
+  height: 28px;
+}
+
+.input {
+  &[type='text'],
+  &[type='password'] {
     padding: 10px;
     margin-bottom: 10px;
     color: var(--color-beige);
     background-color: var(--color-main-light-background);
     border: 1px solid var(--color-beige);
     border-radius: 2px;
+
+    &::-ms-clear {
+      display: none;
+    }
 
     &:focus {
       outline: none;
@@ -33,8 +48,30 @@
     }
   }
 
-  .errorMessage {
+  &[type='search'] {
+    padding: 4px 34px 4px 12px;
     font-size: var(--font-size-small);
-  }
+    width: 100%;
+    height: 100%;
+    color: var(--color-beige);
+    background-color: var(--color-main-light-background);
+    border: none;
+    border-radius: 9999px;
 
+    &::-webkit-search-cancel-button {
+      display: none;
+    }
+
+    &:focus {
+      outline: none;
+      //border: 1px solid var(--color-beige);
+      //box-shadow: 0 0 6px rgba(192, 158, 89, 0.6);
+      //background-color: #780606;
+    }
+  }
 }
+
+.errorMessage {
+  font-size: var(--font-size-small);
+}
+

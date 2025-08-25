@@ -1,9 +1,13 @@
-
 .selectContainer {
   cursor: pointer;
   position: relative;
-  width: 220px;
-  height: 40px;
+  width: 90px;
+  height: 28px;
+
+  @media (max-width: 820px) {
+    order: 0;
+    grid-area: 2 / 1 / 3 / 2;
+  }
 
   .labelSelect {
     position: absolute;
@@ -11,12 +15,15 @@
     right: 0;
     bottom: 0;
     left: 0;
+    font-size: var(--font-size-small);
     font-weight: bold;
-    border: 1px solid var(--color-beige);
+    //border: 1px solid var(--color-beige);
+    border-radius: 10px;
     background-color: var(--color-main-light-background);
     color: var(--color-beige);
     transition: all 0.2s ease-in;
-    padding: 8px 15px;
+    margin-left: 5px;
+    padding: 4px 34px 4px 12px;
 
     &:hover {
       background-color: var(--color-main-super-light-background);
@@ -31,15 +38,16 @@
       border-left: 7px solid transparent;
       border-bottom: 0;
       position: absolute;
-      top: 16px;
+      top: 50%;
       right: 10px;
+      transform: translateY(-50%);
     }
 
     &:active, &.active {
       &:after {
         border-bottom: 7px solid var(--color-beige);
         border-top: 0;
-        top: 15px;
+        transform: translateY(-50%);
       }
     }
   }
@@ -50,22 +58,24 @@
     right: 0;
     left: 0;
     z-index: 100;
-    margin: 0;
+    margin-top: 8px;
     padding: 0;
-    border: 1px solid var(--color-beige);
+    //border: 1px solid var(--color-beige);
+    border-radius: 10px;
     list-style: none;
     background-color: var(--color-main-light-background);
 
     .option {
       margin: 0;
-      padding: 12px 0;
-      text-indent: 15px;
-      border-top: 1px solid var(--color-beige);
+      padding: 6px 12px;
+      font-size: var(--font-size-base);
+      //border-top: 1px solid var(--color-beige);
+      border-radius: 10px;
       transition: all 0.15s ease-in;
 
       &:hover {
-      background-color: var(--color-main-super-light-background);
-    }
+        background-color: var(--color-main-super-light-background);
+      }
     }
   }
 
