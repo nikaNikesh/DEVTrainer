@@ -1,7 +1,6 @@
 import React, {ReactElement, useState, useEffect} from "react";
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {nextPage, prevPage} from "../../store/slices/tasksDataSlice";
 
 import styles from './Task.module.scss';
 
@@ -11,6 +10,7 @@ import {Link} from "react-router-dom";
 import SortIcon from "../icon/sortIcon";
 import InputField from "../input";
 import SearchIcon from "../icon/searchIcon/searchIcon";
+import Pagination from "../pagination/pagination";
 
 interface Task {
     id: number,
@@ -34,7 +34,6 @@ const Task = (): ReactElement => {
 
     const currentPage = useAppSelector((state) => state.tasksData.currentPage);
     const difficulty = useAppSelector((state) => state.tasksData.difficulty);
-    const totalPage = useAppSelector((state) => state.tasksData.totalPage);
     const dataTasks = useAppSelector((state) => state.tasksData.dataTask);
 
     const [sortName, setSortName] = useState<'none' | 'asc' | 'desc'>('none');
@@ -131,14 +130,7 @@ const Task = (): ReactElement => {
                     )
                 })}
             </div>
-
-            <div className={styles.pagination}>
-                <button className={styles.arrowPrev} onClick={() => dispatch(prevPage())}
-                        disabled={currentPage === 0}></button>
-                <span>Page: <span className={styles.selectedPage}>{currentPage + 1}</span> of {totalPage}</span>
-                <button className={styles.arrowNext} onClick={() => dispatch(nextPage())}
-                        disabled={currentPage === totalPage - 1}></button>
-            </div>
+            <Pagination/>
         </main>
     );
 }
