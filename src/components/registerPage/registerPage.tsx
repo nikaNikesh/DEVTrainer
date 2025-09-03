@@ -4,7 +4,7 @@ import {useAppSelector} from '../../hooks/useAppSelector';
 import InputField from "../input";
 import {useAuthForm} from '../../hooks/useAuthForm';
 import styles from './RegisterPage.module.scss';
-import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {Link} from "react-router-dom";
 import Button from "../button";
 
 const RegisterPage: React.FC = () => {
@@ -54,7 +54,7 @@ const RegisterPage: React.FC = () => {
 
 
     return (
-         <main className={styles.main}>
+        <main className={styles.main}>
             <form className={styles.form} onSubmit={(e) => {
                 e.preventDefault();
                 submitForm();
@@ -97,14 +97,17 @@ const RegisterPage: React.FC = () => {
                     error={errorPassword}
                     inputRef={passwordRef}
                 />
-                 <Button
-                    size={'small'}
-                    type={'submit'}
-                >
-                    Sign up
-                </Button>
+                <div className={styles.buttonContainer}>
+                    <Link to={"/auth/"}>Log in</Link>
+                    <Button
+                        size={'small'}
+                        type={'submit'}
+                    >
+                        Sign up
+                    </Button>
+                </div>
             </form>
-         </main>
+        </main>
     );
 };
 
