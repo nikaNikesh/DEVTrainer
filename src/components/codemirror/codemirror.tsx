@@ -4,18 +4,32 @@ import {EditorView, basicSetup} from "codemirror";
 import {oneDark} from "@codemirror/theme-one-dark";
 import {javascript} from "@codemirror/lang-javascript";
 import {java} from "@codemirror/lang-java";
+import {python} from "@codemirror/lang-python";
+import {cpp} from "@codemirror/lang-cpp";
+import type { LanguageSupport } from "@codemirror/language"
 import {useAppSelector} from "../../hooks/useAppSelector";
-
 
 interface PropsType {
     onChange: (id: string, solution: string) => void;
     id: string;
 }
+type LanguageKey = "javascript" | "python" | "java" | "c++";
 
 const Codemirror: React.FC<PropsType> = ({onChange, id}): ReactElement => {
     const tasksSolutionState = localStorage.getItem(id);
-    const initialDoc: string = "Here will be the task condition with the server";
+    const initialDoc: string = "";
     const editorRef = useRef<HTMLDivElement>(null);
+    const language = useAppSelector((state) => state.codemirror.language) as LanguageKey;
+
+    const languageExtensions: Record<LanguageKey, LanguageSupport> = {
+        javascript: javascript(),
+        python: python(),
+        java: java(),
+        'c++': cpp(),
+    };
+
+    const selectedLanguage = languageExtensions[language] ?? javascript();
+    console.log(selectedLanguage);
 
     useEffect(() => {
         if (!editorRef.current) return;
@@ -25,8 +39,7 @@ const Codemirror: React.FC<PropsType> = ({onChange, id}): ReactElement => {
             extensions: [
                 basicSetup,
                 oneDark,
-                javascript(),
-                java(),
+                selectedLanguage,
                 EditorView.updateListener.of((update) => {
                     if (update.docChanged) {
                         onChange(id, update.state.doc.toString())
@@ -35,13 +48,32 @@ const Codemirror: React.FC<PropsType> = ({onChange, id}): ReactElement => {
                 EditorView.lineWrapping,
                 EditorView.theme({
                     '&': {
-                        backgroundColor: '#383838',
-                        height: '400px',
+                        backgroundColor: 'var(--color-dark) !important',
+                        height: '100%',
                         width: '100%',
+                        padding: '5px',
+                        borderRadius: '3px',
                     },
                     '.cm-content': {
-                        backgroundColor: '#383838',
-                    }
+                        backgroundColor: 'var(--color-dark) !important',
+                        caretColor: 'var(--color-main-background) !important',
+                        borderRadius: '3px !important',
+                    },
+
+                    ".cm-activeLine": {
+                        backgroundColor: "var(--color-main-background) !important",
+                    },
+
+                    ".cm-gutters": {
+                        backgroundColor: "var(--color-dark) !important",
+                        color: "var(--color-main-background) !important",
+                        border: "none",
+                    },
+
+                    ".cm-activeLineGutter": {
+                        backgroundColor: "var(--color-main-background) !important",
+                        color: 'var(--color-dark) !important'
+                    },
                 }),
             ]
         });
@@ -54,48 +86,9 @@ const Codemirror: React.FC<PropsType> = ({onChange, id}): ReactElement => {
         return () => {
             view.destroy();
         };
-    }, []);
+    }, [selectedLanguage]);
     return (
         <div id="codemirrorEditor" ref={editorRef}></div>
     );
 }
 export default Codemirror;
-
-//creating an editor via the CodeMirror component from the "@uiw/react-codemirror" library
-/*import React, {ReactElement} from 'react';
-import CodeMirror, {oneDark, ViewUpdate} from '@uiw/react-codemirror';
-import {javascript} from '@codemirror/lang-javascript';
-import {basicSetup, EditorView} from "codemirror";
-import {autocompletion} from "@codemirror/autocomplete";
-import {useAppSelector} from "../../hooks/useAppSelector";
-
-interface PropsType {
-    myOnChange: (id: number, solution: string) => void;
-    id: number;
-}
-
-const MyCodemirror: React.FC<PropsType> = ({myOnChange, id}): ReactElement => {
-    const tasksSolutionState = useAppSelector(state => state.tasksSolution[id]);
-    const initialDoc: string = "Here will be the task condition with the server";
-    const defaultValue = (!tasksSolutionState) ? initialDoc : tasksSolutionState;
-
-    const [{value}, setValue] = React.useState({value: defaultValue});
-
-    return <CodeMirror value={defaultValue} height={"100px"}
-                       theme="dark"
-                       extensions={[
-                           basicSetup,
-                           oneDark,
-                           javascript(),
-                           autocompletion({
-                               activateOnTyping: true
-                           }),
-                           EditorView.updateListener.of((update: ViewUpdate) => {
-                               if (update.docChanged) {
-                                   myOnChange(id, update.state.doc.toString())
-                               }
-                           })
-                       ]}
-                        />;
-}
-export default MyCodemirror;*/

@@ -32,7 +32,7 @@ const AuthPage: React.FC = () => {
 
     useEffect(() => {
         if (isAuth) {
-            navigate('/', {replace: true});
+            navigate('/tasks', {replace: true});
         } else if (error && error !== "Incorrect login or password") {
             navigate('/error', {
                 state: {

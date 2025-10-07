@@ -1,48 +1,151 @@
-$main-background-color: #1f1f1f;
-$light-background-color: var(--color-main-super-light-background);
-$dark-background-color: adjust-color($main-background-color, $lightness: -3%);
 .main {
-  grid-area: 2/2/3/3;
-
-  min-width: 100%;
-
   display: grid;
   grid-template-columns: 1fr 1fr;
+  min-width: 100%;
+  height: calc(100vh - var(--header-height));
+  background-color: var(--color-main-super-light-background);
 
-  max-height: 100vh;
+  grid-area: 2/2/3/3;
 
   .taskDetailsSection {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100vh - var(--header-height) - 52px);
+    margin-right: 10px;
+    background-color: var(--color-main-super-light-background);
+
     grid-area: 1/1/2/2;
 
+    .taskDetailsTitle {
+      background-color: var(--color-main-super-light-background);
+      padding: 8px 10px;
+    }
+
     .taskDetailsContainer {
-      height: 100%;
-      background-color: $dark-background-color;
+      flex: 1;
+      overflow: auto;
+      overflow-wrap: break-word;
+      padding: 10px;
+      border-radius: 3px;
+      background-color: var(--color-main-light-background);
+
+      .exampleTitle {
+        font-weight: bold;
+        margin-top: 30px;
+        margin-bottom: 6px;
+      }
     }
   }
 
   .solutionSection {
-    grid-area: 1/2/2/3;
-
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    height: calc(100vh - var(--header-height));
+    margin-left: 10px;
+    background-color: var(--color-main-super-light-background);
 
+    grid-area: 1/2/2/3;
+
+    .solutionTitleContainer {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+
+      .solutionTitle {
+        height: 52px;
+        flex-shrink: 0;
+        padding: 8px 10px;
+        background-color: var(--color-main-super-light-background);
+      }
+    }
     .solutionContainer {
+      flex: 1;
       overflow: auto;
-      height: 100%;
       overflow-wrap: break-word;
-      color: var(--color-black);
-      background-color: $light-background-color;
+      border-radius: 3px;
+      background-color: var(--color-dark);
+
+      &::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+      }
+
+      &::-webkit-scrollbar-track {
+        background: var(--color-main-background);
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background: var(--color-main-light-background);
+        border-radius: 6px;
+      }
+
+      &::-webkit-scrollbar-thumb:hover {
+        background: var(--color-main-super-light-background);
+      }
+
+      // Firefox
+      scrollbar-width: thin;
+      scrollbar-color: var(--color-main-light-background) var(--color-main-background);
     }
   }
 
-  .button {
+  .buttonContainer {
+    display: flex;
+    flex-direction: column;
+    height: 52px;
+    flex-shrink: 0;
+    padding: 8px 10px;
     cursor: pointer;
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      align-self: end;
+      width: fit-content;
+      color: var(--color-main-background);
+      font-size: var(--font-size-base);
+      font-weight: bold;
+      background-color: var(--color-main-light-background);
+      transition: all 0.2s ease;
+      padding: 4px 12px;
+      border: 1px solid var(--color-main-background);
+      border-radius: 10px;
+
+      &:hover {
+        background-color: var(--color-main-super-light-background);
+      }
+
+      &:focus-visible {
+        outline: 2px solid white;
+        outline-offset: 2px;
+      }
+    }
   }
 }
 
 @media (max-width: 767px) {
-  .main  {
-    grid-area: 2/1/3/2;;
+  .main {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: 100%;
+    grid-area: 2/1/3/2;
+
+    .taskDetailsSection {
+      margin-right: 0;
+    }
+
+    .solutionSection {
+      margin-left: 0;
+      grid-area: 2/1/3/2;
+
+      .solutionTitleContainer {
+        display: flex;
+        //flex-direction: column;
+      }
+    }
   }
 }
+

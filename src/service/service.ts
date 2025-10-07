@@ -6,7 +6,8 @@ export interface TasksData {
         id: number,
         title: string,
         difficulty: string,
-        numberOfSolutions: number
+        numberOfSolutions: number,
+        descriptionOfTask: string
     }[],
     totalPages: number,
     totalElements: number,

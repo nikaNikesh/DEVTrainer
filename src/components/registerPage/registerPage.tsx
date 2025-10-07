@@ -28,7 +28,7 @@ const RegisterPage: React.FC = () => {
     const loginRef = useRef<HTMLInputElement>(null);
 
     React.useEffect(() => {
-        if (isRegistered) navigate('/', {replace: true});
+        if (isRegistered) navigate('/auth', {replace: true});
     }, [isRegistered, navigate]);
 
     if (error && error !== 'This login is already registered') {

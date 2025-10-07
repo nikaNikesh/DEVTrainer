@@ -5,12 +5,13 @@ import {useAppDispatch} from "../../hooks/useAppDispatch";
 import styles from './Task.module.scss';
 
 import getTasks from "../../service";
-import CustomTasksFilter from "../customTasksFilter";
 import {Link} from "react-router-dom";
 import SortIcon from "../icon/sortIcon";
 import InputField from "../input";
 import SearchIcon from "../icon/searchIcon/searchIcon";
 import Pagination from "../pagination/pagination";
+import {tasksSelectors} from "../../store/slices/tasksDataSlice";
+import DifficultyFilter from "../filters/difficultyFilter";
 
 interface Task {
     id: number,
@@ -34,7 +35,7 @@ const Task = (): ReactElement => {
 
     const currentPage = useAppSelector((state) => state.tasksData.currentPage);
     const difficulty = useAppSelector((state) => state.tasksData.difficulty);
-    const dataTasks = useAppSelector((state) => state.tasksData.dataTask);
+    const tasks = useAppSelector(tasksSelectors.selectAll);
 
     const [sortName, setSortName] = useState<'none' | 'asc' | 'desc'>('none');
     const [sortDifficulty, setSortDifficulty] = useState<'none' | 'asc' | 'desc'>('none');
@@ -91,10 +92,10 @@ const Task = (): ReactElement => {
                     <span role="columnheader" className={`${styles.NO} ${styles.thead}`}> </span>
                     {sortConfig.map(({key, direction, setter}) => {
                         return (
-                            <span role="columnheader" className={`${styles[key]} ${styles.thead}`}>
+                            <span key={key} role="columnheader" className={`${styles[key]} ${styles.thead}`}>
                                 {key === 'name' && (
                                     <>
-                                        <CustomTasksFilter/>
+                                        <DifficultyFilter/>
                                         <div className={styles.inputContainer}>
                                             <InputField
                                                 type='search'
@@ -117,7 +118,7 @@ const Task = (): ReactElement => {
                     }
                 </div>
 
-                {dataTasks.map((task: Task, index: number) => {
+                {tasks.map((task, index) => {
                     return (
                         <div key={task.id} className={styles.taskCardItem}>
                             <span className={styles.NO}>{currentPage * pageSize + index + 1}</span>

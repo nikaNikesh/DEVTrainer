@@ -6,6 +6,7 @@ import authReducer from "./slices/authSlice";
 import registrationReducer from "./slices/registerSlice";
 import modalWindowReducer from "./slices/modalWindowSlice";
 import logOutReducer from "./slices/logOutSlice";
+import codemirrorReducer from "./slices/codemirrorSlice";
 
 const store = configureStore({
     reducer: {
@@ -15,7 +16,8 @@ const store = configureStore({
         auth: authReducer,
         registration: registrationReducer,
         modalWindow: modalWindowReducer,
-        logOut: logOutReducer
+        logOut: logOutReducer,
+        codemirror: codemirrorReducer,
     },
 });
 
