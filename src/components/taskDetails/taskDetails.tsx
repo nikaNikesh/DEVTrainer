@@ -17,7 +17,9 @@ const TaskDetails = (): ReactElement => {
     const tasksSolutionState = localStorage.getItem(taskId!);
     const idForTask: number = Number(taskId);
     const task = useAppSelector((state) => tasksSelectors.selectById(state, idForTask));
-    const [condition, example] = task ? task.descriptionOfTask.split(/example:/i) : ["", ""];
+    const text: string[] = task ? task.descriptionOfTask
+        .replace(/\\n/g, '\n')
+        .split('\n') : [];
 
 
     return (
@@ -25,13 +27,9 @@ const TaskDetails = (): ReactElement => {
             <section className={styles.taskDetailsSection}>
                 <h2 className={styles.taskDetailsTitle}>{task.title}</h2>
                 <div className={styles.taskDetailsContainer}>
-                    <p className={condition}>{condition}</p>
-                    {example && (
-                        <>
-                            <p className={styles.exampleTitle}>Example:</p>
-                            <p className={styles.example}>{example}</p>
-                        </>
-                    )}
+                    {text.map((paragraph, index) => (
+                        <p key={index} className={styles.condition}>{paragraph}</p>
+                    ))}
                 </div>
             </section>
 
