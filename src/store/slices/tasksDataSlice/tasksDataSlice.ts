@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createEntityAdapter, EntityState } from "@reduxjs/toolkit";
 
 import getTasks, {TasksData} from "../../../service/service";
 
@@ -6,11 +6,13 @@ interface Task {
     id: number,
     title: string,
     difficulty: string,
-    numberOfSolutions: number
+    numberOfSolutions: number,
+    descriptionOfTask: string
 }
 
-interface TaskState {
-    dataTask: Task[],
+const tasksAdapter = createEntityAdapter<Task>();
+
+interface TaskState extends EntityState<Task, number> {
     currentPage: number,
     totalPage: number,
     difficulty: string,
@@ -18,14 +20,13 @@ interface TaskState {
     error: string | null
 }
 
-const initialState: TaskState = {
-    dataTask: [],
+const initialState: TaskState = tasksAdapter.getInitialState({
     currentPage: 0,
     totalPage: 0,
     difficulty: 'all',
     loading: false,
     error: null
-}
+});
 
 const tasksDataSlice = createSlice({
     name: 'tasksData',
@@ -39,7 +40,7 @@ const tasksDataSlice = createSlice({
         },
         setDifficulty: (state, action: PayloadAction<string>) => {
             state.difficulty = action.payload;
-            state.currentPage = initialState.currentPage;
+            state.currentPage = 0;
         }
     },
     extraReducers: (builder) => {
@@ -51,17 +52,22 @@ const tasksDataSlice = createSlice({
 
             .addCase(getTasks.fulfilled, (state, action: PayloadAction<TasksData>) => {
                 state.loading = false;
-                state.dataTask = action.payload.content;
                 state.currentPage = action.payload.number;
                 state.totalPage = action.payload.totalPages;
+
+                tasksAdapter.setAll(state, action.payload.content);
             })
 
             .addCase(getTasks.rejected, (state, action) => {
                 state.loading = false;
-                state.error = action.payload ? action.payload: "Failed to load tasks";
+                state.error = action.payload ? action.payload : "Failed to load tasks";
             })
     }
 });
+
+export const tasksSelectors = tasksAdapter.getSelectors<{
+    tasksData: TaskState
+}>((state) => state.tasksData);
 
 export const {
     nextPage,

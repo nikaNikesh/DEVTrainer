@@ -5,6 +5,9 @@ import {useAppDispatch} from "../../hooks/useAppDispatch";
 import sendService from "../../service/sendService";
 
 import styles from "./TaskDetails.module.scss";
+import {useAppSelector} from "../../hooks/useAppSelector";
+import {tasksSelectors} from "../../store/slices/tasksDataSlice";
+import LanguageFilter from "../filters/languageFilter";
 
 const TaskDetails = (): ReactElement => {
 
@@ -12,18 +15,29 @@ const TaskDetails = (): ReactElement => {
     const dispatch = useAppDispatch();
     const url: string = 'https://localhost:8443/api/v1/tasks';
     const tasksSolutionState = localStorage.getItem(taskId!);
+    const idForTask: number = Number(taskId);
+    const task = useAppSelector((state) => tasksSelectors.selectById(state, idForTask));
+    const text: string[] = task ? task.descriptionOfTask
+        .replace(/\\n/g, '\n')
+        .split('\n') : [];
+
 
     return (
         <main className={styles.main}>
             <section className={styles.taskDetailsSection}>
-                <h2>Task Name</h2>
+                <h2 className={styles.taskDetailsTitle}>{task.title}</h2>
                 <div className={styles.taskDetailsContainer}>
-                    <p>Task ID: {taskId}</p>
+                    {text.map((paragraph, index) => (
+                        <p key={index} className={styles.condition}>{paragraph}</p>
+                    ))}
                 </div>
             </section>
 
             <section className={styles.solutionSection}>
-                <h2>Your solution</h2>
+                <div className={styles.solutionTitleContainer}>
+                    <h2 className={styles.solutionTitle}>Your solution</h2>
+                    <LanguageFilter/>
+                </div>
                 <div className={styles.solutionContainer}>
                     <Codemirror
                         onChange={
