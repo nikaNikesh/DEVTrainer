@@ -11,12 +11,13 @@ type ButtonProps = {
 const Button: React.FC<ButtonProps> = ({
   children,
   size = 'medium',
+  type = 'button',
   ...props
 }) => {
   const buttonClass = `${styles.button}  ${styles[size]}`;
 
   return (
-    <button type="button" className={buttonClass} {...props}>
+    <button type={type} className={buttonClass} {...props}>
       {children}
     </button>
   );

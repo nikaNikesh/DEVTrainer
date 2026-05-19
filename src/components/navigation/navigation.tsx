@@ -1,9 +1,10 @@
-import React, {ReactElement, useEffect} from "react";
-import {Link, useLocation} from "react-router-dom";
-import {useAppSelector} from "../../hooks/useAppSelector";
-import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {closeBurgerMenu} from "../../store/slices/burgerMenuSlice";
-import {openModal} from "../../store/slices/modalWindowSlice";
+import React, { ReactElement, useEffect } from "react";
+import { Link, useLocation } from "react-router-dom";
+
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { closeBurgerMenu } from "../../store/slices/burgerMenuSlice";
+import { openModal } from "../../store/slices/modalWindowSlice";
 
 import styles from './Navigation.module.scss';
 
@@ -57,7 +58,6 @@ const Navigation = (): ReactElement => {
                 </ul>
             </nav>
         </div>
-
     );
 }
 

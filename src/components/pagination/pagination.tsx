@@ -1,7 +1,7 @@
-import React, {ReactElement} from "react";
-import {useAppSelector} from "../../hooks/useAppSelector";
-import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {nextPage, prevPage} from "../../store/slices/tasksDataSlice";
+import React, { ReactElement } from "react";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import {  nextPage, prevPage } from "../../store/slices/tasksDataSlice";
 
 import styles from './Pagination.module.scss';
 const Pagination = (): ReactElement => {

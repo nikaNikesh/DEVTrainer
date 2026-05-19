@@ -9,7 +9,7 @@ interface SelectProps {
     className?: string;
 }
 
-const CustomSelect = ({ options, selected, onChange, className }: SelectProps): ReactElement => {
+const CustomSelect = ({options, selected, onChange, className}: SelectProps): ReactElement => {
     const [isOpenOptions, setOpenOptions] = useState<boolean>(false);
     const selectContainerRef = useRef<HTMLDivElement | null>(null);
 

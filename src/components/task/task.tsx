@@ -1,17 +1,19 @@
-import React, {ReactElement, useState, useEffect} from "react";
-import {useAppSelector} from "../../hooks/useAppSelector";
-import {useAppDispatch} from "../../hooks/useAppDispatch";
+import React, { ReactElement, useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
-import styles from './Task.module.scss';
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { tasksSelectors } from "../../store/slices/tasksDataSlice";
 
 import getTasks from "../../service";
-import {Link} from "react-router-dom";
-import SortIcon from "../icon/sortIcon";
+
 import InputField from "../input";
-import SearchIcon from "../icon/searchIcon/searchIcon";
 import Pagination from "../pagination/pagination";
-import {tasksSelectors} from "../../store/slices/tasksDataSlice";
 import DifficultyFilter from "../filters/difficultyFilter";
+
+import SearchIcon from "../icon/searchIcon/searchIcon";
+import SortIcon from "../icon/sortIcon";
+import styles from './Task.module.scss';
 
 interface Task {
     id: number,
@@ -43,7 +45,6 @@ const Task = (): ReactElement => {
     const [searchValue, setSearchValue] = useState<string>('');
 
     const searchValueRef = React.useRef<HTMLInputElement>(null);
-
 
     const sortConfig: SortItem[] = [
         {key: 'name', direction: sortName, setter: setSortName},

@@ -1,5 +1,5 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
-import axios, {AxiosResponse} from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios, { AxiosResponse } from "axios";
 
 interface AuthCredentials {
     email: string;
@@ -40,9 +40,8 @@ const authService = createAsyncThunk<
                 if (error.response.status === 401) {
                     return rejectWithValue(ERROR_MESSAGES.UNAUTHORIZED);
                 }
-
-                return rejectWithValue(ERROR_MESSAGES.UNEXPECTED_ERROR);
             }
+            return rejectWithValue(ERROR_MESSAGES.UNEXPECTED_ERROR);
         }
     }
 );

@@ -1,13 +1,14 @@
-import React, {ReactElement} from "react";
-import {useRef} from 'react';
-import {Link} from "react-router-dom";
-import styles from "./Home.module.scss";
+import React, { ReactElement } from "react";
+import { useRef } from 'react';
+import { Link } from "react-router-dom";
+
 import HandshakeIcon from "@mui/icons-material/Handshake";
 import WorkIcon from "@mui/icons-material/Work";
 import PsychologyIcon from "@mui/icons-material/Psychology";
 import DevicesIcon from "@mui/icons-material/Devices";
 import TrendingUpIcon from "@mui/icons-material/TrendingUp";
 
+import styles from "./Home.module.scss";
 
 const Home = (): ReactElement => {
     const startButtonRef = useRef<HTMLAnchorElement>(null);

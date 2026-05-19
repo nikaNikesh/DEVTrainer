@@ -1,7 +1,25 @@
-@keyframes move {
-  0% { margin-left: 0; margin-right: 0; }
-    50% { margin-left: 10px; margin-right: 10px; }
-    100% { margin-left: 0; margin-right: 0; }
+@keyframes moveRight {
+  0% {
+    transform: translateY(-50%) translateX(0) rotate(135deg);
+  }
+  50% {
+    transform: translateY(-50%) translateX(-10px) rotate(135deg);
+  }
+  100% {
+    transform: translateY(-50%) translateX(0) rotate(135deg);
+  }
+}
+
+@keyframes moveLeft {
+  0% {
+    transform: translateY(-50%) translateX(0) rotate(-45deg);
+  }
+  50% {
+    transform: translateY(-50%) translateX(10px) rotate(-45deg);
+  }
+  100% {
+    transform: translateY(-50%) translateX(0) rotate(-45deg);
+  }
 }
 
 .main {
@@ -11,7 +29,7 @@
   align-items: center;
   max-width: 100%;
   min-width: 100%;
-  min-height: 100vh;
+  //min-height: 100vh;
   background-color: var(--color-dark);
   grid-area: 2/2/3/3;
 
@@ -27,6 +45,7 @@
     margin-left: auto;
     margin-right: auto;
     row-gap: 60px;
+    flex-shrink: 0;
     background-color: var(--color-dark);
 
     & > :nth-child(odd) {
@@ -83,7 +102,9 @@
     height: 100px;
     width: 400px;
     padding: 20px;
+    margin-top: 100px;
     margin-bottom: 300px;
+    flex-shrink: 0;
     color: var(--color-beige);
     font-size: var(--font-size-h1);
     font-weight: bold;
@@ -95,6 +116,7 @@
     0 4px 16px rgba(0, 0, 0, 0.6),
     0 0 6px rgba(192, 158, 89, 0.6);
   }
+
   .startButton::before,
   .startButton::after,
   .startButton span::before,
@@ -107,13 +129,12 @@
     border-right: 5px solid var(--color-beige);
     border-bottom: 5px solid var(--color-beige);
     transition: border-color 0.3s ease;
-     animation: move 1s ease-in-out infinite;
   }
 
   /* Правая стрелка (первая) */
   .startButton::before {
-    right: 35px;
-    transform: translateY(-50%) rotate(135deg);
+    right: 45px;
+    animation: moveRight 1s ease-in-out infinite;
     width: 18px;
     height: 18px;
   }
@@ -121,21 +142,21 @@
   /* Левая стрелка (вторая) */
   .startButton::after {
     left: 35px;
-    transform: translateY(-50%) rotate(-45deg);
+    animation: moveLeft 1s ease-in-out infinite;
     width: 18px;
     height: 18px;
   }
 
   /* Правая стрелка (вторая) */
   .startButton span::before {
-    right: 20px;
-    transform: translateY(-50%) rotate(135deg);
+    right: 30px;
+    animation: moveRight 1s ease-in-out infinite;
   }
 
   /* Левая стрелка (первая) */
   .startButton span::after {
     left: 20px;
-    transform: translateY(-50%) rotate(-45deg);
+    animation: moveLeft 1s ease-in-out infinite;
   }
 }
 

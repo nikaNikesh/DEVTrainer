@@ -1,4 +1,5 @@
-import {configureStore} from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
+
 import tasksDataReducer from "./slices/tasksDataSlice";
 import burgerMenuReducer from "./slices/burgerMenuSlice";
 import solutionReducer from "./slices/solutionResponseSlice";
