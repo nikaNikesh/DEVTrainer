@@ -1,5 +1,5 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
-import axios, {AxiosResponse} from "axios";
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios, { AxiosResponse } from "axios";
 
 
 interface ServerResponse {

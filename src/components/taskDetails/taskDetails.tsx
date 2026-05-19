@@ -1,17 +1,17 @@
-import React, {ReactElement} from "react";
-import {useParams} from "react-router-dom";
+import React, { ReactElement } from "react";
+import { useParams } from "react-router-dom";
 import Codemirror from "../codemirror";
-import {useAppDispatch} from "../../hooks/useAppDispatch";
-import sendService from "../../service/sendService";
 
-import styles from "./TaskDetails.module.scss";
-import {useAppSelector} from "../../hooks/useAppSelector";
-import {tasksSelectors} from "../../store/slices/tasksDataSlice";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { tasksSelectors } from "../../store/slices/tasksDataSlice";
+import sendService from "../../service/sendService";
 import LanguageFilter from "../filters/languageFilter";
 
+import styles from "./TaskDetails.module.scss";
 const TaskDetails = (): ReactElement => {
 
-    const {taskId} = useParams();
+    const { taskId } = useParams();
     const dispatch = useAppDispatch();
     const url: string = 'https://localhost:8443/api/v1/tasks';
     const tasksSolutionState = localStorage.getItem(taskId!);
@@ -20,7 +20,6 @@ const TaskDetails = (): ReactElement => {
     const text: string[] = task ? task.descriptionOfTask
         .replace(/\\n/g, '\n')
         .split('\n') : [];
-
 
     return (
         <main className={styles.main}>

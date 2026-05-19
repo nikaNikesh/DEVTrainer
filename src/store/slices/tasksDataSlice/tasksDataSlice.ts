@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction, createEntityAdapter, EntityState } from "@reduxjs/toolkit";
 
-import getTasks, {TasksData} from "../../../service/service";
+import getTasks, { TasksData } from "../../../service/service";
 
 interface Task {
     id: number,

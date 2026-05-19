@@ -1,11 +1,10 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 interface initialStateType {
     isVisible: boolean;
 }
 
-const initialState: initialStateType = {isVisible: true};
-
+const initialState: initialStateType = { isVisible: true };
 
 const burgerMenuSlice = createSlice({
     name: "burgerMenu",
@@ -21,4 +20,5 @@ const burgerMenuSlice = createSlice({
 });
 
 export default burgerMenuSlice.reducer;
-export const {toggleBurgerMenu, closeBurgerMenu} = burgerMenuSlice.actions;
+export const { toggleBurgerMenu,
+               closeBurgerMenu } = burgerMenuSlice.actions;

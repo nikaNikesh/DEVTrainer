@@ -1,13 +1,14 @@
-import React, {ReactElement, useEffect, useRef} from "react";
-import {EditorState} from "@codemirror/state";
-import {EditorView, basicSetup} from "codemirror";
-import {oneDark} from "@codemirror/theme-one-dark";
-import {javascript} from "@codemirror/lang-javascript";
-import {java} from "@codemirror/lang-java";
-import {python} from "@codemirror/lang-python";
-import {cpp} from "@codemirror/lang-cpp";
+import React, { ReactElement, useEffect, useRef } from "react";
+import { EditorState } from "@codemirror/state";
+import { EditorView, basicSetup } from "codemirror";
+import { oneDark } from "@codemirror/theme-one-dark";
+import { javascript } from "@codemirror/lang-javascript";
+import { java } from "@codemirror/lang-java";
+import { python } from "@codemirror/lang-python";
+import { cpp } from "@codemirror/lang-cpp";
 import type { LanguageSupport } from "@codemirror/language"
-import {useAppSelector} from "../../hooks/useAppSelector";
+
+import { useAppSelector } from "../../hooks/useAppSelector";
 
 interface PropsType {
     onChange: (id: string, solution: string) => void;
@@ -29,7 +30,6 @@ const Codemirror: React.FC<PropsType> = ({onChange, id}): ReactElement => {
     };
 
     const selectedLanguage = languageExtensions[language] ?? javascript();
-    console.log(selectedLanguage);
 
     useEffect(() => {
         if (!editorRef.current) return;

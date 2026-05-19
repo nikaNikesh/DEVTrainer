@@ -4,7 +4,7 @@ import styles from './SortIcon.module.scss';
 
 type SetterType = React.Dispatch<React.SetStateAction<'none' | 'asc' | 'desc'>>;
 
-const sortIcon: React.FC<{ direction: 'none' | 'asc' | 'desc', setter: SetterType }> = ({direction, setter}) => {
+const sortIcon: React.FC<{ direction: 'none' | 'asc' | 'desc', setter: SetterType }> = ({ direction, setter }) => {
     const toggleSort = (setter: React.Dispatch<React.SetStateAction<'none' | 'asc' | 'desc'>>) => {
         setter(prev => (prev === 'none' ? 'asc' : prev === 'asc' ? 'desc' : 'none'));
     };

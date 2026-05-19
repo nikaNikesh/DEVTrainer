@@ -1,5 +1,6 @@
-import styles from './SearchIcon.module.scss';
 import React from "react";
+
+import styles from './SearchIcon.module.scss';
 
 type SearchInputProps = {
     handleSearchUpdate: () => void;

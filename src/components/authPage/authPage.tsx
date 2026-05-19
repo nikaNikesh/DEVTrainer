@@ -1,12 +1,13 @@
-import React, {useEffect} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {useAppSelector} from '../../hooks/useAppSelector';
+import React, { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { useAppSelector } from '../../hooks/useAppSelector';
+import { useAuthForm  } from "../../hooks/useAuthForm";
+
 import InputField from "../input";
-import {useAuthForm} from "../../hooks/useAuthForm";
-import styles from './AuthPage.module.scss';
-import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {clearAuthError} from "../../store/slices/authSlice";
 import Button from "../button";
+
+import styles from './AuthPage.module.scss';
 
 const AuthPage: React.FC = () => {
     const {
@@ -23,12 +24,10 @@ const AuthPage: React.FC = () => {
     } = useAuthForm('login');
 
     const error = useAppSelector((state) => state.auth.error);
-
     const isAuth = useAppSelector((state) => state.auth.isAuth);
     const navigate = useNavigate();
     const passwordRef = React.useRef<HTMLInputElement>(null);
     const loginRef = React.useRef<HTMLInputElement>(null);
-    const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (isAuth) {

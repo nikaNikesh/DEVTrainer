@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
-import {useAppDispatch} from "./useAppDispatch";
+import React, { useState } from 'react';
+import { useAppDispatch } from "./useAppDispatch";
+
 import authService from '../service/authService';
 import registerService from '../service/registerService';
-
 
 const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-z]{2,6}$/;
 const passwordPattern = /^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)[^\sА-Яа-я]{8,}$/;

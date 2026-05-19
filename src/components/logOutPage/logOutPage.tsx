@@ -1,13 +1,16 @@
-import React, {ReactElement, useEffect} from 'react';
-import styles from './LogOutPage.module.scss';
-import {useAppDispatch} from "../../hooks/useAppDispatch";
-import {closeModal} from "../../store/slices/modalWindowSlice";
-import {useAppSelector} from "../../hooks/useAppSelector";
-import {useNavigate} from "react-router-dom";
+import React, { ReactElement, useEffect } from 'react';
+import { useNavigate } from "react-router-dom";
+
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { useAppSelector } from "../../hooks/useAppSelector";
+import { closeModal } from "../../store/slices/modalWindowSlice";
 import logOutService from "../../service/logOutService";
-import {toggleIsAuth} from "../../store/slices/authSlice";
-import {toggleIsLogOut} from "../../store/slices/logOutSlice";
+import { toggleIsAuth } from "../../store/slices/authSlice";
+import { toggleIsLogOut } from "../../store/slices/logOutSlice";
+
 import Button from "../button";
+
+import styles from './LogOutPage.module.scss';
 
 const LogOutPage = (): ReactElement | null => {
     const navigate = useNavigate();
@@ -30,7 +33,7 @@ const LogOutPage = (): ReactElement | null => {
     return (
         <div className={styles.modal}>
             <div className={styles.modalContent}>
-                <h2 className={styles.title}>Вы уверены, что хотите покинуть страницу?</h2>
+                <h2 className={styles.title}>Are you sure you want to leave this page?</h2>
                 <div className={styles.buttonsContainer}>
                     <Button
                         size='small'
@@ -40,7 +43,7 @@ const LogOutPage = (): ReactElement | null => {
                         disabled={false}
                         type="submit"
                     >
-                        Да
+                        Yes
                     </Button>
                     <Button
                         size='small'
@@ -50,7 +53,7 @@ const LogOutPage = (): ReactElement | null => {
                         disabled={false}
                         type="submit"
                     >
-                        Отмена
+                        Cancel
                     </Button>
                 </div>
             </div>

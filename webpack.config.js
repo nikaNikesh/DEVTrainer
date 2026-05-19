@@ -1,4 +1,4 @@
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 
@@ -17,7 +17,7 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
-                    'style-loader',   // Используем 'style-loader' для разработки
+                    'style-loader',
                     {
                         loader: 'css-loader',
                         options: {
@@ -28,7 +28,7 @@ module.exports = {
                             importLoaders: 1,
                         },
                     },
-                    'sass-loader',    // Компилирует Sass в CSS
+                    'sass-loader',
                 ],
                 include: path.resolve(__dirname, 'src'),
             },
@@ -54,7 +54,7 @@ module.exports = {
             changeOrigin: true,
             secure: false,
             timeout: 60000,
-            logLevel: 'debug'  // Добавление логирования
+            logLevel: 'debug'
           }
         ]*/
     },

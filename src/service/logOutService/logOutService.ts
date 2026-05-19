@@ -1,12 +1,11 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
-import axios, {AxiosResponse} from "axios";
-
+import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from "axios";
 
 const ERROR_MESSAGES = {
     UNAUTHORIZED: "Unauthorized access",
     SERVER_NOT_RESPONDING: "Server not responding - check your internet connection",
     UNEXPECTED_ERROR: "Unexpected error occurred",
-};
+} as const;
 
 const logOutService = createAsyncThunk<
     void,
@@ -16,9 +15,9 @@ const logOutService = createAsyncThunk<
     'auth/logOut',
     async (url, {rejectWithValue}) => {
         try {
-            const response: AxiosResponse<void> = await axios.get(url, {
-  withCredentials: true
-});
+            await axios.get<void>(url, {
+                withCredentials: true
+            });
             return;
         } catch (error) {
 
@@ -31,9 +30,8 @@ const logOutService = createAsyncThunk<
                 if (error.response.status === 401) {
                     return rejectWithValue(ERROR_MESSAGES.UNAUTHORIZED);
                 }
-
-                return rejectWithValue(ERROR_MESSAGES.UNEXPECTED_ERROR);
             }
+            return rejectWithValue(ERROR_MESSAGES.UNEXPECTED_ERROR);
         }
     }
 );

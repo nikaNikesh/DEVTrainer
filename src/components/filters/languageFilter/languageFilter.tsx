@@ -1,7 +1,7 @@
-import React, {ReactElement} from "react";
-import {useAppDispatch} from "../../../hooks/useAppDispatch";
-import {useAppSelector} from "../../../hooks/useAppSelector";
-import {onChangeLanguage} from "../../../store/slices/codemirrorSlice";
+import React, { ReactElement } from "react";
+import { useAppDispatch } from "../../../hooks/useAppDispatch";
+import { useAppSelector } from "../../../hooks/useAppSelector";
+import { onChangeLanguage } from "../../../store/slices/codemirrorSlice";
 import CustomSelect from "../customSelect";
 
 const LanguageFilter = (): ReactElement => {
@@ -10,6 +10,7 @@ const LanguageFilter = (): ReactElement => {
     const language = useAppSelector((state) => state.codemirror.language);
 
     return (
+
         <CustomSelect
             className={'languageSelect'}
             options={dataOptions}

@@ -1,10 +1,12 @@
 import React, {ReactElement} from 'react';
-import styles from './Header.module.scss';
-import BurgerMenu from "../burgerMenu";
-import {Link} from "react-router-dom";
-import logo from "../../assets/logo.png";
-import {useAppSelector} from "../../hooks/useAppSelector";
+import { Link } from "react-router-dom";
 
+import { useAppSelector } from "../../hooks/useAppSelector";
+
+import BurgerMenu from "../burgerMenu";
+
+import logo from "../../assets/logo.png";
+import styles from './Header.module.scss';
 const Header = (): ReactElement => {
     const isAuth = useAppSelector((state) => state.auth.isAuth);
     return (

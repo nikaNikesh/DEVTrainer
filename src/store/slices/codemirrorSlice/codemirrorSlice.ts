@@ -1,11 +1,10 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface initialStateType {
     language: string;
 }
 
-const initialState: initialStateType = {language: 'javascript'};
-
+const initialState: initialStateType = { language: 'javascript' };
 
 const codemirrorSlice = createSlice({
     name: "codemirror",
@@ -18,4 +17,4 @@ const codemirrorSlice = createSlice({
 });
 
 export default codemirrorSlice.reducer;
-export const {onChangeLanguage} = codemirrorSlice.actions;
+export const { onChangeLanguage } = codemirrorSlice.actions;
