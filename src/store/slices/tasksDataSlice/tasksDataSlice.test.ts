@@ -4,6 +4,7 @@ import reducer, {
     setDifficulty,
 } from "./tasksDataSlice";
 
+import {FetchTasksParams} from "../../../service/service";
 import getTasks from "../../../service/service";
 
 const initialState = reducer(undefined, {type: ""});
@@ -29,10 +30,9 @@ describe('tasksDataSlice', () => {
     });
 
     describe('extraReducers', () => {
-        const mockArg = {
-            url: '',
-            page: 5,
-            size: 10
+        const mockArg: FetchTasksParams = {
+            currentPage: 5,
+            pageSize: 10
         };
         test('pending sets loading true and clears error', () => {
             const newInitialState = {...initialState, error: 'old error'};

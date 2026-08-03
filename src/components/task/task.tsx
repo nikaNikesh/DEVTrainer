@@ -1,9 +1,9 @@
-import React, { ReactElement, useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, {ReactElement, useState, useEffect} from "react";
+import {Link} from "react-router-dom";
 
-import { useAppSelector } from "../../hooks/useAppSelector";
-import { useAppDispatch } from "../../hooks/useAppDispatch";
-import { tasksSelectors } from "../../store/slices/tasksDataSlice";
+import {useAppSelector} from "../../hooks/useAppSelector";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {tasksSelectors} from "../../store/slices/tasksDataSlice";
 
 import getTasks from "../../service";
 
@@ -15,12 +15,6 @@ import SearchIcon from "../icon/searchIcon/searchIcon";
 import SortIcon from "../icon/sortIcon";
 import styles from './Task.module.scss';
 
-interface Task {
-    id: number,
-    title: string,
-    difficulty: string,
-    numberOfSolutions: number
-}
 
 type SortDirection = 'none' | 'asc' | 'desc';
 
@@ -32,8 +26,7 @@ interface SortItem {
 
 const Task = (): ReactElement => {
     const pageSize: number = 5;
-    const url: string = 'https://localhost:8443/api/v1/tasks';
-    const dispatch = useAppDispatch();
+    const dispatch= useAppDispatch();
 
     const currentPage = useAppSelector((state) => state.tasksData.currentPage);
     const difficulty = useAppSelector((state) => state.tasksData.difficulty);
@@ -45,6 +38,7 @@ const Task = (): ReactElement => {
     const [searchValue, setSearchValue] = useState<string>('');
 
     const searchValueRef = React.useRef<HTMLInputElement>(null);
+    const hasCross: boolean = searchValue.trim().length > 0;
 
     const sortConfig: SortItem[] = [
         {key: 'name', direction: sortName, setter: setSortName},
@@ -53,37 +47,42 @@ const Task = (): ReactElement => {
     ];
 
     useEffect(() => {
-        dispatch(getTasks({
-            url: url,
-            page: currentPage,
-            size: pageSize,
-            difficulty: difficulty,
-            /*sort: [
-                {
-                    name: 'name',
-                    direction: sortName
-                },
-                {
-                    name: 'difficulty',
-                    direction: sortDifficulty
-                },
-                {
-                    name: 'solutions',
-                    direction: sortSolutions
-                }
-            ]*/
-        }));
-    }, [currentPage, difficulty, sortName, sortDifficulty, sortSolutions, searchValue]);
-
+    dispatch(getTasks({
+        currentPage,
+        pageSize,
+        difficulty,
+        searchValue,
+        sortName,
+        sortDifficulty,
+        sortSolutions,
+    }));
+}, [
+    dispatch,
+    currentPage,
+    pageSize,
+    difficulty,
+    searchValue,
+    sortName,
+    sortDifficulty,
+    sortSolutions,
+]);
     const handleSearchUpdate = () => {
+    if (searchValueRef.current) {
+        setSearchValue(searchValueRef.current.value);
+    }
+};
+
+const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && searchValueRef.current) {
+        setSearchValue(searchValueRef.current.value);
+    }
+};
+
+const handleClearValue = () => {
         if (searchValueRef.current) {
-            setSearchValue(searchValueRef.current.value);
+            searchValueRef.current.value = '';
         }
-    };
-    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter" && searchValueRef.current) {
-            setSearchValue(searchValueRef.current.value);
-        }
+        setSearchValue('');
     };
 
     return (
@@ -104,7 +103,9 @@ const Task = (): ReactElement => {
                                                 onKeyDown={handleKeyDown}
                                                 inputRef={searchValueRef}
                                             />
-                                            <SearchIcon handleSearchUpdate={handleSearchUpdate}
+                                            <SearchIcon hasCross={hasCross}
+                                                        onSearch={handleSearchUpdate}
+                                                        onClear={handleClearValue}
                                             />
                                         </div>
                                     </>
