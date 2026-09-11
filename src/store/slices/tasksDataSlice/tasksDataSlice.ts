@@ -41,6 +41,9 @@ const tasksDataSlice = createSlice({
         setDifficulty: (state, action: PayloadAction<string>) => {
             state.difficulty = action.payload;
             state.currentPage = 0;
+        },
+        clearTasksError: (state) => {
+            state.error = null;
         }
     },
     extraReducers: (builder) => {
@@ -72,6 +75,7 @@ export const tasksSelectors = tasksAdapter.getSelectors<{
 export const {
     nextPage,
     prevPage,
-    setDifficulty
+    setDifficulty,
+    clearTasksError,
 } = tasksDataSlice.actions;
 export default tasksDataSlice.reducer;

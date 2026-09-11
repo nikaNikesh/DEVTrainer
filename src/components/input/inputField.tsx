@@ -13,6 +13,7 @@ interface InputFieldProps {
     onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
     error?: string;
     inputRef?: React.Ref<HTMLInputElement>;
+    disabled?: boolean;
 }
 
 const InputField: React.FC<InputFieldProps> = React.memo(({
@@ -26,6 +27,7 @@ const InputField: React.FC<InputFieldProps> = React.memo(({
     onKeyDown,
     error,
     inputRef,
+    disabled
 }) => {
     return (
     <div className={styles.errorInputContainer}>
@@ -40,6 +42,7 @@ const InputField: React.FC<InputFieldProps> = React.memo(({
                 onFocus={onFocus}
                 onKeyDown={onKeyDown}
                 className={`${styles.input} ${error ? styles.errorBorder : ""}`}
+                disabled={disabled}
             />
             {error && <span className={styles.errorMessage}>{error}</span>}
     </div>

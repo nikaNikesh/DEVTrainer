@@ -1,29 +1,30 @@
-import {createAsyncThunk} from "@reduxjs/toolkit";
+import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios, {AxiosResponse} from "axios";
-
 import {ERROR_MESSAGES} from "../../constants/errorMessages";
 
-interface AuthCredentials {
-    email: string;
-    password: string;
+interface Task {
+    id: number,
+    title: string,
+    difficulty: string,
+    numberOfSolutions: number,
+    descriptionOfTask: string
 }
 
-interface AuthPayload {
-    url: string;
-    credentials: AuthCredentials;
-}
+const GET_TASK_BY_ID_URL = "https://localhost:8443/api/v1/tasks";
 
-const authService = createAsyncThunk<
-    void,
-    AuthPayload,
+const getTaskById = createAsyncThunk<
+    Task,
+    number,
     { rejectValue: string }
 >(
-    'auth/login',
-    async ({url, credentials}, {rejectWithValue}) => {
+    "tasks/fetchById",
+    async (taskId: number, { rejectWithValue }) => {
         try {
-            await axios.post(url, credentials, {
-                withCredentials: true
-            });
+            const response: AxiosResponse<Task> = await axios.get(
+                `${GET_TASK_BY_ID_URL}/${taskId}`,
+                { withCredentials: true }
+            );
+            return response.data;
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 if (!error.response) {
@@ -43,5 +44,4 @@ const authService = createAsyncThunk<
     }
 );
 
-export default authService;
-
+export default getTaskById;

@@ -97,7 +97,8 @@
 
   .buttonContainer {
     display: flex;
-    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
     height: 52px;
     flex-shrink: 0;
     padding: 8px 10px;
@@ -109,6 +110,7 @@
       justify-content: center;
       align-self: end;
       width: fit-content;
+      margin-left: auto;
       color: var(--color-main-background);
       font-size: var(--font-size-base);
       font-weight: bold;
@@ -126,6 +128,9 @@
         outline: 2px solid white;
         outline-offset: 2px;
       }
+    }
+    .successMessage {
+      font-size: var(--font-size-small);
     }
   }
 }

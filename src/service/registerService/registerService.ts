@@ -1,5 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
-import axios, {AxiosResponse} from "axios";
+import axios from "axios";
+
+import {ERROR_MESSAGES} from "../../constants/errorMessages";
 
 interface AuthCredentials {
     username: string;
@@ -12,12 +14,6 @@ interface AuthPayload {
     credentials: AuthCredentials;
 }
 
-const ERROR_MESSAGES = {
-    LOGIN_CONFLICT: "This login is already registered",
-    SERVER_NOT_RESPONDING: "Server not responding - check your internet connection",
-    UNEXPECTED_ERROR: "Unexpected error occurred",
-};
-
 const registerService = createAsyncThunk<
     void,
     AuthPayload,
@@ -26,12 +22,16 @@ const registerService = createAsyncThunk<
     'auth/register',
     async ({url, credentials}, {rejectWithValue}) => {
         try {
-            const response: AxiosResponse<void> = await axios.post(url, credentials, {
-  withCredentials: true
-});
-            return;
-        } catch (error) {
+            const payload = {
+                username: credentials.username,
+                email: credentials.login,
+                password: credentials.password,
+            };
 
+            await axios.post(url, payload, {
+                withCredentials: true
+            });
+        } catch (error) {
             if (axios.isAxiosError(error)) {
 
                 if (!error.response) {
@@ -39,7 +39,7 @@ const registerService = createAsyncThunk<
                 }
 
                 if (error.response.status === 409) {
-                    return rejectWithValue(ERROR_MESSAGES.LOGIN_CONFLICT);
+                    return rejectWithValue(ERROR_MESSAGES.LOGIN_ALREADY_REGISTERED);
                 }
             }
             return rejectWithValue(ERROR_MESSAGES.UNEXPECTED_ERROR);

@@ -1,5 +1,6 @@
 import axios, {AxiosResponse} from "axios";
 import {createAsyncThunk} from "@reduxjs/toolkit";
+import {ERROR_MESSAGES} from "../constants/errorMessages";
 
 export interface TasksData {
     content: {
@@ -106,8 +107,21 @@ const getTasks = createAsyncThunk<
             );
 
             return response.data;
-        } catch (error: any) {
-            return rejectWithValue(error.message || 'Failed to load tasks')
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                if (!error.response) {
+                    return rejectWithValue(ERROR_MESSAGES.SERVER_NOT_RESPONDING);
+                }
+
+                if (error.response.status === 401) {
+                    return rejectWithValue(ERROR_MESSAGES.UNAUTHORIZED);
+                }
+
+                if (error.response.status === 403) {
+                    return rejectWithValue(ERROR_MESSAGES.FORBIDDEN);
+                }
+            }
+            return rejectWithValue(ERROR_MESSAGES.UNEXPECTED_ERROR);
         }
     }
 );

@@ -1,27 +1,47 @@
-import {createSlice} from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
+
 import sendService from "../../../service/sendService";
 
-interface ServerResponse {
-    status: string | null,
-    message: string | null
+interface SolutionState {
+    isSent: boolean;
+    error: string | null;
 }
 
-const initialState: ServerResponse = {
-    status: null,
-    message: null
-}
+const initialState: SolutionState = {
+    isSent: false,
+    error: null,
+};
 
-const solutionResponseSlice = createSlice({
-    name: 'solution',
+const solutionSlice = createSlice({
+    name: "solution",
     initialState,
-    reducers: {},
+    reducers: {
+        clearSolutionError: (state) => {
+            state.error = null;
+        },
+        clearIsSent: (state) => {
+            state.isSent = false;
+        },
+    },
     extraReducers: (builder) => {
-        builder.addCase(
-            sendService.rejected,
-            (state, action) => {
-                state.message = action.payload ? action.payload : "Failed to load tasks";
-            }
-        )
-    }
+        builder
+            .addCase(sendService.pending, (state) => {
+                state.isSent = false;
+                state.error = null;
+            })
+            .addCase(sendService.fulfilled, (state, action) => {
+                state.isSent = action.payload.success;
+            })
+            .addCase(sendService.rejected, (state, action) => {
+                state.isSent = false;
+                state.error = action.payload ?? "Failed to send solution";
+            });
+    },
 });
-export default solutionResponseSlice.reducer;
+
+export const {
+    clearSolutionError,
+    clearIsSent,
+} = solutionSlice.actions;
+
+export default solutionSlice.reducer;
