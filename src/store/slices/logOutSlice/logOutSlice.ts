@@ -17,7 +17,10 @@ const logOutSlice = createSlice({
     name: "auth",
     initialState,
     reducers: {
-     toggleIsLogOut: (state) => {
+        clearLogOutError: (state) => {
+            state.error = null;
+        },
+        toggleIsLogOut: (state) => {
             state.isLogOut = false;
         },
     },
@@ -52,6 +55,7 @@ const logOutSlice = createSlice({
 });
 
 export const {
-    toggleIsLogOut
+    toggleIsLogOut,
+    clearLogOutError,
 } = logOutSlice.actions;
 export default logOutSlice.reducer;

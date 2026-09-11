@@ -1,5 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import authService from "../../../service/authService";
+import checkAuthService from "../../../service/checkAuthService";
 
 interface AuthState {
     isAuth: boolean;
@@ -21,36 +22,40 @@ const authSlice = createSlice({
             state.error = null;
         },
         toggleIsAuth: (state) => {
-            state.isAuth = !state.isAuth;
+            state.isAuth = false;
         },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(
-                authService.pending,
-                (state) => {
+            .addCase(authService.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(authService.fulfilled, (state) => {
+                state.isAuth = true;
+                state.loading = false;
+                state.error = null;
+            })
+            .addCase(authService.rejected, (state, action) => {
+                state.loading = false;
+                state.isAuth = false;
+                state.error = action.payload ? action.payload : "Unknown error during authentication";
+            })
 
-                    state.loading = true;
-                }
-            )
-
-            .addCase(
-                authService.fulfilled,
-                (state) => {
-
-                    state.isAuth = true;
-                    state.loading = false;
-                }
-            )
-
-            .addCase(
-                authService.rejected,
-                (state, action) => {
-
-                    state.loading = false;
-                    state.error = action.payload ? action.payload : "Unknown error during authentication";
-                }
-            )
+            .addCase(checkAuthService.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(checkAuthService.fulfilled, (state, action) => {
+                state.loading = false;
+                state.isAuth = action.payload;
+                state.error = null;
+            })
+            .addCase(checkAuthService.rejected, (state, action) => {
+                state.loading = false;
+                state.isAuth = false;
+                state.error = action.payload ? action.payload : "Check auth failed";
+            });
     }
 });
 

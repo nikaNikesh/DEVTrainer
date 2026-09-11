@@ -1,12 +1,20 @@
 import React, {StrictMode} from "react";
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux'; //
+import store from "./store";
 import App from './components/app'
 import "./index.scss";
 import "./styles/main.scss";
 
 const root: ReactDOM.Root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
-root.render(<StrictMode> <App/> </StrictMode>);
+root.render(
+    <StrictMode>
+        <Provider store={store}>
+            <App />
+        </Provider>
+    </StrictMode>
+);
 
 
 

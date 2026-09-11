@@ -1,25 +1,33 @@
 import React from 'react';
 import styles from './Button.module.scss';
 
-type ButtonProps = {
-  children: React.ReactNode;
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   size?: 'small' | 'medium' | 'large';
-  onClick?: () => void;
-  disabled?: boolean;
-  type?: 'button' | 'submit' | 'reset';
+  loading?: boolean;
 };
-const Button: React.FC<ButtonProps> = ({
-  children,
-  size = 'medium',
-  type = 'button',
-  ...props
-}) => {
-  const buttonClass = `${styles.button}  ${styles[size]}`;
 
+const Button: React.FC<ButtonProps> = ({
+                                         children,
+                                         size = 'medium',
+                                         loading = false,
+                                         className,
+                                         ...props
+                                       }) => {
   return (
-    <button type={type} className={buttonClass} {...props}>
-      {children}
-    </button>
+      <button
+          className={`${styles.button} ${styles[size]} ${className ?? ''}`}
+          disabled={loading || props.disabled}
+          {...props}
+      >
+          {loading ? (
+              <>
+                  Loading
+                  <span className={styles.spinner} />
+              </>
+          ) : (
+              children
+          )}
+      </button>
   );
 };
 

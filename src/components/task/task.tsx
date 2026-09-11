@@ -1,9 +1,11 @@
 import React, {ReactElement, useState, useEffect} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 import {useAppSelector} from "../../hooks/useAppSelector";
 import {useAppDispatch} from "../../hooks/useAppDispatch";
 import {tasksSelectors} from "../../store/slices/tasksDataSlice";
+import {ERROR_MESSAGES} from "../../constants/errorMessages";
+import {clearTasksError} from "../../store/slices/tasksDataSlice";
 
 import getTasks from "../../service";
 
@@ -26,10 +28,12 @@ interface SortItem {
 
 const Task = (): ReactElement => {
     const pageSize: number = 5;
-    const dispatch= useAppDispatch();
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
 
     const currentPage = useAppSelector((state) => state.tasksData.currentPage);
     const difficulty = useAppSelector((state) => state.tasksData.difficulty);
+    const error = useAppSelector((state) => state.tasksData.error);
     const tasks = useAppSelector(tasksSelectors.selectAll);
 
     const [sortName, setSortName] = useState<'none' | 'asc' | 'desc'>('none');
@@ -47,7 +51,17 @@ const Task = (): ReactElement => {
     ];
 
     useEffect(() => {
-    dispatch(getTasks({
+        dispatch(getTasks({
+            currentPage,
+            pageSize,
+            difficulty,
+            searchValue,
+            sortName,
+            sortDifficulty,
+            sortSolutions,
+        }));
+    }, [
+        dispatch,
         currentPage,
         pageSize,
         difficulty,
@@ -55,30 +69,41 @@ const Task = (): ReactElement => {
         sortName,
         sortDifficulty,
         sortSolutions,
-    }));
-}, [
-    dispatch,
-    currentPage,
-    pageSize,
-    difficulty,
-    searchValue,
-    sortName,
-    sortDifficulty,
-    sortSolutions,
-]);
+    ]);
+
+    useEffect(() => {
+        if (error === ERROR_MESSAGES.UNAUTHORIZED) {
+            navigate('/auth', {replace: true});
+
+            dispatch(clearTasksError());
+
+            return;
+        }
+
+        if (error) {
+            navigate('/error', {
+                state: {
+                    errorMessage: error,
+                },
+            });
+
+            dispatch(clearTasksError());
+        }
+    }, [error, navigate, dispatch]);
+
     const handleSearchUpdate = () => {
-    if (searchValueRef.current) {
-        setSearchValue(searchValueRef.current.value);
-    }
-};
+        if (searchValueRef.current) {
+            setSearchValue(searchValueRef.current.value);
+        }
+    };
 
-const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && searchValueRef.current) {
-        setSearchValue(searchValueRef.current.value);
-    }
-};
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter" && searchValueRef.current) {
+            setSearchValue(searchValueRef.current.value);
+        }
+    };
 
-const handleClearValue = () => {
+    const handleClearValue = () => {
         if (searchValueRef.current) {
             searchValueRef.current.value = '';
         }

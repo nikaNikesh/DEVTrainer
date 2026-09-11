@@ -1,8 +1,9 @@
-import React, { ReactElement } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import { Provider } from 'react-redux';
 
-import store from "../../store";
+import {useAppDispatch} from "../../hooks/useAppDispatch";
+import {useAppSelector} from "../../hooks/useAppSelector";
+import checkAuthService from "../../service/checkAuthService";
 
 import Header from "../header";
 import Navigation from "../navigation";
@@ -15,13 +16,23 @@ import RegisterPage from "../registerPage";
 import LogOutPage from "../logOutPage";
 import ErrorBoundary from "../errorBoundary/errorBoundary";
 import RedirectToErrorPage from "../errorPage/RedirectToErrorPage";
+import FullScreenSpinner from "../fullScreenSpinner";
 
 import styles from "./App.module.scss";
 
 const App = (): ReactElement => {
+    const dispatch = useAppDispatch();
+    const { loading } = useAppSelector((state) => state.auth);
+
+    useEffect(() => {
+        dispatch(checkAuthService());
+    }, [dispatch]);
+
+    if (loading) {
+        return <FullScreenSpinner />;
+    }
 
     return (
-        <Provider store={store}>
             <ErrorBoundary>
                 <BrowserRouter>
                     <div className={styles.app}>
@@ -45,7 +56,6 @@ const App = (): ReactElement => {
                     </div>
                 </BrowserRouter>
             </ErrorBoundary>
-        </Provider>
     );
 }
 

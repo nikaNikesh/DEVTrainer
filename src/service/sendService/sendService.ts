@@ -1,38 +1,46 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios, { AxiosResponse } from "axios";
+import {createAsyncThunk} from "@reduxjs/toolkit";
+import axios, {AxiosResponse} from "axios";
+
+import {ERROR_MESSAGES} from "../../constants/errorMessages";
 
 
 interface ServerResponse {
-    status: string,
-    message: string
+    success: boolean
 }
 
-interface RequestBody {
-    id: string,
+interface Request {
+    taskId: string,
     solution: string
 }
 
 const sendService = createAsyncThunk<
     ServerResponse,
-    RequestBody & { url: string },
+    Request & { url: string },
     { rejectValue: string }
 >(
     'solution/sendSolution',
-    async ({url, id, solution}, {rejectWithValue}) => {
+    async ({url, taskId, solution}, {rejectWithValue}) => {
 
         try {
             const requestBody = {
-                id: id,
                 solution: solution
             }
             const response: AxiosResponse<ServerResponse> = await axios.post<ServerResponse>(
-                url,
+                `${url}/${taskId}/check`,
                 requestBody,
-                { withCredentials: true }
+                {withCredentials: true}
             );
             return response.data;
-        } catch (error: any ) {
-            return rejectWithValue(error.message || 'Failed to send data')
+        } catch (error) {
+            if (axios.isAxiosError(error) && !error.response) {
+                return rejectWithValue(
+                    ERROR_MESSAGES.SERVER_NOT_RESPONDING
+                );
+            }
+
+            return rejectWithValue(
+                ERROR_MESSAGES.FAILED_TO_SEND_DATA
+            );
         }
 
     }

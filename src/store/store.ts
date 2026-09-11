@@ -4,6 +4,7 @@ import tasksDataReducer from "./slices/tasksDataSlice";
 import burgerMenuReducer from "./slices/burgerMenuSlice";
 import solutionReducer from "./slices/solutionResponseSlice";
 import authReducer from "./slices/authSlice";
+import taskDetailsReducer from "./slices/taskDetailsSlice";
 import registrationReducer from "./slices/registerSlice";
 import modalWindowReducer from "./slices/modalWindowSlice";
 import logOutReducer from "./slices/logOutSlice";
@@ -19,6 +20,7 @@ const store = configureStore({
         modalWindow: modalWindowReducer,
         logOut: logOutReducer,
         codemirror: codemirrorReducer,
+        taskDetails: taskDetailsReducer,
     },
 });
 

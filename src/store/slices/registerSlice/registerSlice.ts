@@ -14,7 +14,7 @@ const initialState: AuthState = {
 }
 
 const registerSlice = createSlice({
-    name: "auth",
+    name: "registration",
     initialState,
     reducers: {
          clearRegistrationError: (state) => {

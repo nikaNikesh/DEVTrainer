@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { useAppSelector } from '../../hooks/useAppSelector';
 import { useAuthForm  } from "../../hooks/useAuthForm";
+import { useAppDispatch } from "../../hooks/useAppDispatch";
+import { clearAuthError } from "../../store/slices/authSlice";
+import {ERROR_MESSAGES} from "../../constants/errorMessages";
 
 import InputField from "../input";
 import Button from "../button";
@@ -23,8 +26,10 @@ const AuthPage: React.FC = () => {
         setErrorPassword,
     } = useAuthForm('login');
 
+    const dispatch = useAppDispatch();
     const error = useAppSelector((state) => state.auth.error);
     const isAuth = useAppSelector((state) => state.auth.isAuth);
+    const loading = useAppSelector((state) => state.auth.loading);
     const navigate = useNavigate();
     const passwordRef = React.useRef<HTMLInputElement>(null);
     const loginRef = React.useRef<HTMLInputElement>(null);
@@ -32,14 +37,17 @@ const AuthPage: React.FC = () => {
     useEffect(() => {
         if (isAuth) {
             navigate('/tasks', {replace: true});
-        } else if (error && error !== "Incorrect login or password") {
+            return;
+        }
+        if (error && error !== ERROR_MESSAGES.UNAUTHORIZED) {
             navigate('/error', {
                 state: {
                     errorMessage: error,
                 }
             });
+            dispatch(clearAuthError());
         }
-    }, [isAuth, error, navigate]);
+    }, [isAuth, error, navigate, dispatch]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -70,7 +78,10 @@ const AuthPage: React.FC = () => {
                         error={errorLogin}
                         inputRef={loginRef}
                     />
-                    {error === "Incorrect login or password" && <span>{error}</span>}
+                    {error === ERROR_MESSAGES.UNAUTHORIZED && (
+                        <span>{error}</span>
+                    )}
+
                     <InputField
                         type="password"
                         placeholder="Password"
@@ -87,6 +98,8 @@ const AuthPage: React.FC = () => {
                 <Button
                     size={'small'}
                     type={'submit'}
+                    disabled={loading}
+                    loading={loading}
                 >
                     Log in
                 </Button>
