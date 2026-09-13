@@ -23,6 +23,16 @@ This is a coding skills training app for developers.
 - Codemirror
 
 ## How to run?
+This application requires the backend server to work correctly.
+
+The backend repository is available here:
+
+https://github.com/Tigor1/progetTrainer.git
+
+Follow the instructions in the backend repository README to install dependencies and start the server.
+
+⚠️ Important: Make sure the backend server is running before starting the frontend application.
+
 1. Make sure you have [Node.js](https://nodejs.org/) installed.
 2. Clone the repository.
 3. Install dependencies:
@@ -30,7 +40,7 @@ This is a coding skills training app for developers.
 npm install
 4. Run 
 ### `npm start`
-5. Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+5. Open [http://localhost:8081](http://localhost:3000) to view it in your browser.
 
 
 ## Third-party resources
